@@ -1,36 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>My Games - Cosmos Hub</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Games - Cosmos Hub</title>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Arial;
-  background: black;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #151515 0%, #050505 40%, #000 100%);
   color: white;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .nav {
   display: flex;
   justify-content: space-between;
-  padding: 15px 25px;
-  background: #000;
+  align-items: center;
+  padding: 16px 28px;
+  background: rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid rgba(255, 176, 64, 0.2);
+  position: sticky;
+  top: 0;
 }
 
-.logo { color: #ffb040; font-weight: bold; }
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffb040;
+}
 
-.games {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+.nav-links {
+  display: flex;
   gap: 20px;
-  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-links a:hover {
+  color: #ffb040;
+}
+
+.hero {
+  text-align: center;
+  padding: 55px 20px 25px;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 48px;
+}
+
+.hero p {
+  margin-top: 10px;
+  color: #c7c7c7;
+  font-size: 16px;
+}
+
+.section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px 20px 60px;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
 }
 
 .card {
   background: #111;
-  padding: 15px;
-  border-radius: 10px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,176,64,0.12);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 18px rgba(255,176,64,0.25);
+  border-color: rgba(255,176,64,0.45);
+}
+
+.card img {
+  width: 100%;
+  height: 145px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-content {
+  padding: 12px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: #a9a9a9;
+}
+
+.footer {
+  text-align: center;
+  color: #8c8c8c;
+  padding: 0 20px 30px;
+  font-size: 14px;
 }
 </style>
 </head>
@@ -39,13 +132,59 @@ body {
 
 <div class="nav">
   <div class="logo">Cosmos Hub</div>
-  <a href="index.html">Back</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="my-games.html">Games</a>
+    <a href="movies.html">Movies</a>
+    <a href="music.html">Music</a>
+  </div>
 </div>
 
-<h1 style="text-align:center;">My Games</h1>
+<div class="hero">
+  <h1>Games</h1>
+  <p>This is your full games page, like the music page but for all your games.</p>
+</div>
 
-<div class="games">
-  <div class="card">Your game goes here</div>
+<div class="section">
+  <div class="section-title">All Games</div>
+
+  <div class="games-grid">
+    <a href="game1.html" class="card">
+      <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80" alt="Game 1">
+      <div class="card-content">
+        <div class="card-title">Game 1</div>
+        <div class="card-desc">Open your first game page.</div>
+      </div>
+    </a>
+
+    <a href="game2.html" class="card">
+      <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80" alt="Game 2">
+      <div class="card-content">
+        <div class="card-title">Game 2</div>
+        <div class="card-desc">Open your second game page.</div>
+      </div>
+    </a>
+
+    <a href="game3.html" class="card">
+      <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80" alt="Game 3">
+      <div class="card-content">
+        <div class="card-title">Game 3</div>
+        <div class="card-desc">Open your third game page.</div>
+      </div>
+    </a>
+
+    <a href="game4.html" class="card">
+      <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1200&q=80" alt="Game 4">
+      <div class="card-content">
+        <div class="card-title">Game 4</div>
+        <div class="card-desc">Open your fourth game page.</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="footer">
+  © 2026 Cosmos Hub
 </div>
 
 </body>

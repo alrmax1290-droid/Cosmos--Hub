@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Movies - Cosmos Hub</title>
 
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: black;
+  color: white;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 25px;
+  background: #000;
+}
+
+.logo { color: #ffb040; font-weight: bold; }
+
+.movies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: #111;
+  padding: 15px;
+  border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="nav">
+  <div class="logo">Cosmos Hub</div>
+  <a href="index.html">Back</a>
+</div>
+
+<h1 style="text-align:center;">Movies</h1>
+
+<div class="movies">
+  <div class="card">Movie slot</div>
+</div>
+
+</body>
+</html>

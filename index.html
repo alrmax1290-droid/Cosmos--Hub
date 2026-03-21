@@ -1,98 +1,218 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cosmos Hub</title>
-
   <style>
-    body {
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
-      background: black;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #151515 0%, #050505 35%, #000 100%);
       color: white;
-      font-family: Arial;
+      min-height: 100%;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
     .nav {
       display: flex;
       justify-content: space-between;
-      padding: 20px 40px;
-      background: #0a0a0a;
-      border-bottom: 1px solid #222;
+      align-items: center;
+      padding: 18px 28px;
+      background: rgba(5, 5, 5, 0.9);
+      border-bottom: 1px solid rgba(255, 176, 64, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
-    .nav h2 {
-      margin: 0;
-      color: #f5b041;
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffb040;
     }
 
-    .nav a {
-      color: white;
-      margin-left: 20px;
-      text-decoration: none;
+    .nav-links {
+      display: flex;
+      gap: 22px;
     }
 
-    h1 {
+    .nav-links a:hover {
+      color: #ffb040;
+    }
+
+    .hero {
       text-align: center;
-      margin-top: 40px;
-      font-size: 50px;
+      padding: 60px 20px 20px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 4rem;
+      font-weight: 800;
+    }
+
+    .hero p {
+      margin-top: 12px;
+      color: #c9c9c9;
+      font-size: 1.1rem;
+    }
+
+    .games-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 20px 60px;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin: 10px 0 24px;
     }
 
     .games {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
     }
 
     .card {
-      background: #111;
-      border-radius: 15px;
+      background: #101010;
+      border-radius: 18px;
       overflow: hidden;
-      transition: 0.2s;
-      text-decoration: none;
-      color: white;
+      border: 1px solid rgba(255, 176, 64, 0.12);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     }
 
     .card:hover {
-      transform: scale(1.05);
+      transform: translateY(-6px);
+      border-color: rgba(255, 176, 64, 0.45);
+      box-shadow: 0 0 20px rgba(255, 176, 64, 0.18);
     }
 
     .card img {
       width: 100%;
-      height: 120px;
+      height: 160px;
       object-fit: cover;
+      display: block;
     }
 
-    .card p {
-      padding: 10px;
-      font-weight: bold;
+    .card-content {
+      padding: 16px;
+    }
+
+    .card-title {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .card-desc {
+      margin: 0;
+      color: #bfbfbf;
+      line-height: 1.4;
+      font-size: 0.95rem;
+    }
+
+    .footer {
+      text-align: center;
+      color: #9a9a9a;
+      padding: 10px 20px 30px;
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
     }
   </style>
 </head>
-
 <body>
+  <nav class="nav">
+    <div class="logo">Cosmos Hub</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#games">Games</a>
+      <a href="music.html">Music</a>
+    </div>
+  </nav>
 
-<div class="nav">
-  <h2>Cosmos Hub</h2>
-  <div>
-    <a href="#">Home</a>
-    <a href="#">Games</a>
-    <a href="#">Music</a>
+  <section class="hero">
+    <h1>Cosmos Hub</h1>
+    <p>Your all-in-one spot for games, music, and more.</p>
+  </section>
+
+  <section class="games-section" id="games">
+    <h2 class="section-title">Popular Games</h2>
+
+    <div class="games">
+      <a href="game1.html" class="card">
+        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80" alt="Game 1">
+        <div class="card-content">
+          <h3 class="card-title">Game 1</h3>
+          <p class="card-desc">Your first game page.</p>
+        </div>
+      </a>
+
+      <a href="game2.html" class="card">
+        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80" alt="Game 2">
+        <div class="card-content">
+          <h3 class="card-title">Game 2</h3>
+          <p class="card-desc">Your second game page.</p>
+        </div>
+      </a>
+
+      <a href="game3.html" class="card">
+        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80" alt="Game 3">
+        <div class="card-content">
+          <h3 class="card-title">Game 3</h3>
+          <p class="card-desc">Links to your third game page.</p>
+        </div>
+      </a>
+
+      <a href="game4.html" class="card">
+        <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1200&q=80" alt="Game 4">
+        <div class="card-content">
+          <h3 class="card-title">Game 4</h3>
+          <p class="card-desc">Links to your fourth game page.</p>
+        </div>
+      </a>
+
+      <a href="music.html" class="card">
+        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1200&q=80" alt="Music">
+        <div class="card-content">
+          <h3 class="card-title">Music</h3>
+          <p class="card-desc">Open your music page from the homepage.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <div class="footer">
+    © 2026 Cosmos Hub
   </div>
-</div>
-
-<h1>Cosmos Hub</h1>
-
-<div class="games">
-  <a href="game1.html" class="card">
-    <img src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db">
-    <p>Game 1</p>
-  </a>
-
-  <a href="game2.html" class="card">
-    <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432">
-    <p>Game 2</p>
-  </a>
-</div>
-
 </body>
 </html>

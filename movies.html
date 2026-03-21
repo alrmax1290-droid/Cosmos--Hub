@@ -1,52 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Movies - Cosmos Hub</title>
 
 <style>
-body {
+html, body {
   margin: 0;
-  font-family: Arial;
-  background: black;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #151515 0%, #050505 40%, #000 100%);
   color: white;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .nav {
   display: flex;
   justify-content: space-between;
-  padding: 15px 25px;
-  background: #000;
+  align-items: center;
+  padding: 16px 28px;
+  background: rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid rgba(255, 176, 64, 0.2);
 }
 
-.logo { color: #ffb040; font-weight: bold; }
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffb040;
+}
 
-.movies {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+.nav-links {
+  display: flex;
   gap: 20px;
-  padding: 20px;
+  flex-wrap: wrap;
 }
 
-.card {
-  background: #111;
-  padding: 15px;
-  border-radius: 10px;
+.nav-links a:hover {
+  color: #ffb040;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: #0d0d0d;
+  border-bottom: 1px solid #222;
+}
+
+.topbar-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.back-link {
+  color: #ffb040;
+  font-weight: bold;
+}
+
+.frame-wrap {
+  flex: 1;
+  padding: 12px;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 14px;
+  background: #000;
 }
 </style>
 </head>
 
 <body>
+<div class="wrapper">
 
-<div class="nav">
-  <div class="logo">Cosmos Hub</div>
-  <a href="index.html">Back</a>
+  <div class="nav">
+    <div class="logo">Cosmos Hub</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="my-games.html">Games</a>
+      <a href="movies.html">Movies</a>
+      <a href="music.html">Music</a>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="topbar-title">Movies</div>
+    <a href="index.html" class="back-link">← Back Home</a>
+  </div>
+
+  <div class="frame-wrap">
+    <iframe src="https://tellurideeducationassociation.org/page/media/index.html"></iframe>
+  </div>
+
 </div>
-
-<h1 style="text-align:center;">Movies</h1>
-
-<div class="movies">
-  <div class="card">Movie slot</div>
-</div>
-
 </body>
 </html>

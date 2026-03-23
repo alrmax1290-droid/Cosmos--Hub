@@ -27,8 +27,8 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 16px 28px;
-  background: rgba(0, 0, 0, 0.9);
-  border-bottom: 1px solid rgba(255, 176, 64, 0.2);
+  background: rgba(0,0,0,0.9);
+  border-bottom: 1px solid rgba(255,176,64,0.2);
   position: sticky;
   top: 0;
 }
@@ -42,7 +42,6 @@ a {
 .nav-links {
   display: flex;
   gap: 20px;
-  flex-wrap: wrap;
 }
 
 .nav-links a:hover {
@@ -62,7 +61,6 @@ a {
 .hero p {
   margin-top: 10px;
   color: #c7c7c7;
-  font-size: 16px;
 }
 
 .section {
@@ -73,7 +71,6 @@ a {
 
 .section-title {
   font-size: 28px;
-  font-weight: bold;
   margin-bottom: 20px;
 }
 
@@ -88,20 +85,18 @@ a {
   border-radius: 14px;
   overflow: hidden;
   border: 1px solid rgba(255,176,64,0.12);
-  transition: all 0.25s ease;
+  transition: all .25s ease;
 }
 
 .card:hover {
   transform: scale(1.06) translateY(-4px);
   box-shadow: 0 0 18px rgba(255,176,64,0.25);
-  border-color: rgba(255,176,64,0.45);
 }
 
 .card img {
   width: 100%;
   height: 145px;
   object-fit: cover;
-  display: block;
 }
 
 .card-content {
@@ -111,7 +106,6 @@ a {
 .card-title {
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 6px;
 }
 
 .card-desc {
@@ -122,8 +116,7 @@ a {
 .footer {
   text-align: center;
   color: #8c8c8c;
-  padding: 0 20px 30px;
-  font-size: 14px;
+  padding-bottom: 30px;
 }
 </style>
 </head>
@@ -142,53 +135,155 @@ a {
 
 <div class="hero">
   <h1>Games</h1>
-  <p>This is your full games page — all your favorite games in one place.</p>
+  <p>All your games in one place.</p>
 </div>
 
 <div class="section">
-  <div class="section-title">All Games</div>
+<div class="section-title">All Games</div>
 
-  <div class="games-grid">
-    <!-- Game 1 -->
-    <a href="game1.html" class="card">
-      <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322170/capsule_616x353.jpg?t=1703006148" alt="Geometry Dash">
-      <div class="card-content">
-        <div class="card-title">Geometry Dash</div>
-        <div class="card-desc">Classic rhythm-based platformer. Jump and fly through challenging levels!</div>
-      </div>
-    </a>
+<div class="games-grid">
 
-    <!-- Game 2 -->
-    <a href="game2.html" class="card">
-      <img src="https://lh3.googleusercontent.com/proxy/QBV71Re8qSinxUKtEN3dZBmFG8oJGtwSQ4Jnnu41Ypm7k1Y0c1trxMbWYcNlbCbU19Da10Id8Tzf8c5DHqs1l5ucGk_3cDpYeSMtECgtJR_vTgE" alt="OVO">
-      <div class="card-content">
-        <div class="card-title">OVO</div>
-        <div class="card-desc">Parkour platformer where you jump, climb, and dodge obstacles to reach the goal.</div>
-      </div>
-    </a>
+<a href="game1.html" class="card">
+<img src="images/geometrydash.png">
+<div class="card-content">
+<div class="card-title">Geometry Dash</div>
+<div class="card-desc">Rhythm platformer with intense levels.</div>
+</div>
+</a>
 
-    <!-- Game 3 -->
-    <a href="game3.html" class="card">
-      <img src="https://www.jesuithighschool.org/sites/main/files/imagecache/lightbox/main-images/retrobowl_0.jpg" alt="Retro Bowl">
-      <div class="card-content">
-        <div class="card-title">Retro Bowl</div>
-        <div class="card-desc">American football arcade game. Build your team and win championships!</div>
-      </div>
-    </a>
+<a href="game2.html" class="card">
+<img src="images/ovo.png">
+<div class="card-content">
+<div class="card-title">OVO</div>
+<div class="card-desc">Fast paced parkour platformer.</div>
+</div>
+</a>
 
-    <!-- Game 4 -->
-    <a href="game4.html" class="card">
-      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/06/16-brotato-best-builds.jpg" alt="Brotato">
-      <div class="card-content">
-        <div class="card-title">Brotato</div>
-        <div class="card-desc">Top-down action shooter. Fight off hordes of enemies with fast-paced combat.</div>
-      </div>
-    </a>
-  </div>
+<a href="game3.html" class="card">
+<img src="images/retrobowl.png">
+<div class="card-content">
+<div class="card-title">Retro Bowl</div>
+<div class="card-desc">Retro football management game.</div>
+</div>
+</a>
+
+<a href="game4.html" class="card">
+<img src="images/brotato.png">
+<div class="card-content">
+<div class="card-title">Brotato</div>
+<div class="card-desc">Arena survival shooter.</div>
+</div>
+</a>
+
+<a href="game5.html" class="card">
+<img src="images/epstein.png">
+<div class="card-content">
+<div class="card-title">Five Nights at Epsteins</div>
+<div class="card-desc">Survive the night in this horror parody.</div>
+</div>
+</a>
+
+<a href="game6.html" class="card">
+<img src="images/ironlung.png">
+<div class="card-content">
+<div class="card-title">Iron Lung</div>
+<div class="card-desc">Explore a terrifying ocean in a submarine.</div>
+</div>
+</a>
+
+<a href="game7.html" class="card">
+<img src="images/plinko.png">
+<div class="card-content">
+<div class="card-title">Plinko</div>
+<div class="card-desc">Drop chips and watch them bounce to prizes.</div>
+</div>
+</a>
+
+<a href="game8.html" class="card">
+<img src="images/snowrider.png">
+<div class="card-content">
+<div class="card-title">Snow Rider 3D</div>
+<div class="card-desc">Ride your sled through snowy obstacles.</div>
+</div>
+</a>
+
+<a href="game9.html" class="card">
+<img src="images/isaac.png">
+<div class="card-content">
+<div class="card-title">Binding of Isaac</div>
+<div class="card-desc">Dark dungeon crawler shooter.</div>
+</div>
+</a>
+
+<a href="game10.html" class="card">
+<img src="images/bendy.png">
+<div class="card-content">
+<div class="card-title">Bendy and the Ink Machine</div>
+<div class="card-desc">Horror adventure in an abandoned studio.</div>
+</div>
+</a>
+
+<a href="game11.html" class="card">
+<img src="images/blockblast.png">
+<div class="card-content">
+<div class="card-title">Block Blast</div>
+<div class="card-desc">Puzzle game inspired by classic block games.</div>
+</div>
+</a>
+
+<a href="game12.html" class="card">
+<img src="images/cloverpit.png">
+<div class="card-content">
+<div class="card-title">Clover Pit</div>
+<div class="card-desc">Arcade survival with endless enemies.</div>
+</div>
+</a>
+
+<a href="game13.html" class="card">
+<img src="images/survivorio.png">
+<div class="card-content">
+<div class="card-title">Survivor.io</div>
+<div class="card-desc">Fight off massive waves of enemies.</div>
+</div>
+</a>
+
+<a href="game14.html" class="card">
+<img src="images/bartblast.png">
+<div class="card-content">
+<div class="card-title">Bart Blast</div>
+<div class="card-desc">Arcade shooter chaos.</div>
+</div>
+</a>
+
+<a href="game15.html" class="card">
+<img src="images/fused.png">
+<div class="card-content">
+<div class="card-title">Fused</div>
+<div class="card-desc">Strategic puzzle merging game.</div>
+</div>
+</a>
+
+<a href="game16.html" class="card">
+<img src="images/christmasmassacre.png">
+<div class="card-content">
+<div class="card-title">Christmas Massacre</div>
+<div class="card-desc">Holiday themed horror action.</div>
+</div>
+</a>
+
+<a href="game17.html" class="card">
+<img src="images/cellmachine.png">
+<div class="card-content">
+<div class="card-title">Cell Machine</div>
+<div class="card-desc">Creative puzzle machine builder.</div>
+</div>
+</a>
+
+</div>
 </div>
 
 <div class="footer">
-  © 2026 Cosmos Hub
+© 2026 Cosmos Hub
 </div>
 
 </body>

@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Play Game - Cosmos Hub</title>
 
+<style>
+
+body{
+margin:0;
+background:#000;
+font-family:Arial,sans-serif;
+color:white;
+display:flex;
+flex-direction:column;
+height:100vh;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 20px;
+background:#0b0b0b;
+border-bottom:1px solid #222;
+}
+
+.topbar a{
+color:#ffb040;
+text-decoration:none;
+font-weight:bold;
+}
+
+.game-frame{
+flex:1;
+width:100%;
+border:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+<div>Cosmos Hub</div>
+<a href="my-games.html">← Back to Games</a>
+</div>
+
+<iframe id="gameFrame" class="game-frame"></iframe>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const game = params.get("game");
+
+const games = {
+
+geometrydash:"https://alrmax1290-droid.github.io/GEOMETRYDASH/",
+ovo:"https://alrmax1290-droid.github.io/OVO/",
+retrobowl:"https://alrmax1290-droid.github.io/RETROBOWL/",
+brotato:"https://alrmax1290-droid.github.io/BROTATO/",
+
+baldi:"",
+halflife2:"",
+snowrider:"",
+blockblast:"",
+cellmachine:"",
+isaac:"",
+
+fnaf1:"",
+fnaf2:"",
+fnaf3:"",
+fnaf4:"",
+sisterlocation:"",
+pizzeriasim:"",
+ucn:"",
+fnafworld:"",
+
+shrekhotel:"",
+candys1:"",
+candys2:"",
+
+brawlsimulator:"",
+survivorio:"",
+plinko:"",
+ironlung:"",
+cloverpit:"",
+fivenightsatepsteins:"",
+bartblast:"",
+fused:"",
+christmasmassacre:""
+
+};
+
+if(games[game] && games[game] !== ""){
+document.getElementById("gameFrame").src = games[game];
+}
+else{
+document.body.innerHTML="<h1 style='text-align:center;margin-top:50px;'>Game not added yet</h1>";
+}
+
+</script>
+
+</body>
+</html>

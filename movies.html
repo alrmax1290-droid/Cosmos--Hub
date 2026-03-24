@@ -10,8 +10,14 @@ html, body {
   margin: 0;
   height: 100%;
   font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #151515 0%, #050505 40%, #000 100%);
   color: white;
+  background:
+    radial-gradient(circle at top, rgba(113, 55, 255, 0.28) 0%, rgba(40, 20, 80, 0.12) 18%, transparent 36%),
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.10) 0 1px, transparent 1px),
+    radial-gradient(circle at 75% 30%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
+    radial-gradient(circle at 35% 75%, rgba(255,255,255,0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at top, #141414 0%, #070711 45%, #000 100%);
+  background-size: auto, 180px 180px, 240px 240px, 300px 300px, auto;
 }
 
 a {
@@ -30,8 +36,12 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 16px 28px;
-  background: rgba(0, 0, 0, 0.9);
-  border-bottom: 1px solid rgba(255, 176, 64, 0.2);
+  background: rgba(0, 0, 0, 0.88);
+  border-bottom: 1px solid rgba(255,176,64,0.18);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
 }
 
 .logo {
@@ -46,7 +56,8 @@ a {
   flex-wrap: wrap;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.active {
   color: #ffb040;
 }
 
@@ -55,7 +66,7 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 14px 20px;
-  background: #0d0d0d;
+  background: rgba(10,10,18,0.92);
   border-bottom: 1px solid #222;
 }
 
@@ -78,8 +89,9 @@ iframe {
   width: 100%;
   height: 100%;
   border: none;
-  border-radius: 14px;
+  border-radius: 16px;
   background: #000;
+  box-shadow: 0 0 20px rgba(120, 80, 255, 0.08);
 }
 </style>
 </head>
@@ -92,7 +104,7 @@ iframe {
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="my-games.html">Games</a>
-      <a href="movies.html">Movies</a>
+      <a href="movies.html" class="active">Movies</a>
       <a href="music.html">Music</a>
     </div>
   </div>

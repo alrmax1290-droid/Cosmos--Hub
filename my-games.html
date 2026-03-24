@@ -13,14 +13,16 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background:
-    radial-gradient(circle at top, rgba(90, 30, 160, 0.35) 0%, rgba(15, 15, 30, 0.15) 18%, transparent 35%),
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
-    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.06) 0 1px, transparent 1px),
-    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.05) 0 1px, transparent 1px),
-    radial-gradient(circle at top, #151515 0%, #070711 45%, #000 100%);
-  background-size: auto, 180px 180px, 240px 240px, 300px 300px, auto;
   color: white;
+  overflow-x: hidden;
+  position: relative;
+  background:
+    radial-gradient(circle at top, rgba(88, 63, 188, 0.35) 0%, rgba(25, 18, 60, 0.18) 20%, transparent 38%),
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.10) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.06) 0 1px, transparent 1px),
+    linear-gradient(180deg, #050816 0%, #03030a 100%);
+  background-size: auto, 180px 180px, 260px 260px, 320px 320px, auto;
 }
 
 a {
@@ -28,24 +30,74 @@ a {
   color: inherit;
 }
 
+.stars,
+.stars2,
+.stars3 {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.stars {
+  background:
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1.5px 1.5px at 90px 40px, rgba(200,220,255,0.8), transparent),
+    radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1.5px 1.5px at 160px 120px, rgba(180,240,255,0.8), transparent);
+  background-repeat: repeat;
+  background-size: 220px 220px;
+  animation: moveStars 100s linear infinite;
+  opacity: 0.6;
+}
+
+.stars2 {
+  background:
+    radial-gradient(1.5px 1.5px at 50px 50px, rgba(130,180,255,0.8), transparent),
+    radial-gradient(2px 2px at 100px 150px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1.5px 1.5px at 150px 90px, rgba(160,220,255,0.8), transparent),
+    radial-gradient(2px 2px at 180px 40px, rgba(220,220,255,0.6), transparent);
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  animation: moveStars 160s linear infinite;
+  opacity: 0.38;
+}
+
+.stars3 {
+  background:
+    radial-gradient(2px 2px at 80px 20px, rgba(170,140,255,0.7), transparent),
+    radial-gradient(1.5px 1.5px at 140px 110px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 30px 160px, rgba(120,220,255,0.6), transparent);
+  background-repeat: repeat;
+  background-size: 360px 360px;
+  animation: moveStars 220s linear infinite;
+  opacity: 0.28;
+}
+
+@keyframes moveStars {
+  from { transform: translateY(0); }
+  to { transform: translateY(-220px); }
+}
+
 .nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 28px;
-  background: rgba(0, 0, 0, 0.88);
-  border-bottom: 1px solid rgba(255, 176, 64, 0.2);
+  background: rgba(6, 10, 24, 0.72);
+  border-bottom: 1px solid rgba(120, 170, 255, 0.16);
+  backdrop-filter: blur(14px);
   position: sticky;
   top: 0;
   z-index: 1000;
-  backdrop-filter: blur(10px);
 }
 
 .logo {
   font-size: 24px;
   font-weight: bold;
-  color: #ffb040;
-  letter-spacing: 0.5px;
+  color: #c9d7ff;
+  text-shadow: 0 0 12px rgba(120,180,255,0.35);
 }
 
 .nav-links {
@@ -55,12 +107,14 @@ a {
 }
 
 .nav-links a {
+  color: #cfd8f6;
   transition: 0.25s;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
-  color: #ffb040;
+  color: #7fdcff;
+  text-shadow: 0 0 10px rgba(127,220,255,0.45);
 }
 
 .hero {
@@ -70,12 +124,13 @@ a {
 
 .hero h1 {
   margin: 0;
-  font-size: 48px;
+  font-size: 52px;
+  color: #eef3ff;
 }
 
 .hero p {
   margin-top: 10px;
-  color: #c7c7c7;
+  color: #b7c2e3;
   font-size: 16px;
 }
 
@@ -85,85 +140,17 @@ a {
   padding: 20px 20px 60px;
 }
 
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 26px;
-}
-
-.search-wrap {
-  flex: 1 1 320px;
-}
-
-.search-input {
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 176, 64, 0.18);
-  background: rgba(18, 18, 24, 0.92);
-  color: white;
-  font-size: 15px;
-  outline: none;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
-}
-
-.search-input:focus {
-  border-color: rgba(255, 176, 64, 0.55);
-  box-shadow: 0 0 0 3px rgba(255, 176, 64, 0.12);
-}
-
-.filter-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.filter-btn {
-  padding: 11px 15px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 176, 64, 0.18);
-  background: rgba(15, 15, 20, 0.92);
-  color: #ddd;
-  cursor: pointer;
-  transition: 0.22s;
-  font-size: 14px;
-}
-
-.filter-btn:hover,
-.filter-btn.active {
-  color: #fff;
-  border-color: rgba(255, 176, 64, 0.65);
-  background: rgba(255, 176, 64, 0.14);
-  box-shadow: 0 0 18px rgba(255, 176, 64, 0.12);
-}
-
-.section-title {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 12px;
-}
-
-.results-text {
-  color: #b5b5b5;
-  font-size: 14px;
-  margin-bottom: 22px;
-}
-
 .featured-game {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: 22px;
-  background:
-    linear-gradient(135deg, rgba(255,176,64,0.12), rgba(120,80,255,0.08)),
-    rgba(10,10,14,0.92);
-  border: 1px solid rgba(255,176,64,0.18);
-  border-radius: 18px;
+  background: rgba(7, 11, 24, 0.58);
+  border: 1px solid rgba(110, 160, 255, 0.10);
+  border-radius: 22px;
   overflow: hidden;
   margin-bottom: 30px;
-  box-shadow: 0 0 30px rgba(255,176,64,0.08);
+  box-shadow: 0 0 30px rgba(85,110,255,0.05);
+  backdrop-filter: blur(10px);
 }
 
 .featured-game img {
@@ -182,7 +169,7 @@ a {
 }
 
 .featured-label {
-  color: #ffb040;
+  color: #8ddfff;
   font-size: 13px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -192,11 +179,12 @@ a {
 .featured-content h2 {
   margin: 0 0 10px;
   font-size: 34px;
+  color: #eef3ff;
 }
 
 .featured-content p {
   margin: 0 0 18px;
-  color: #c7c7c7;
+  color: #b7c2e3;
   line-height: 1.5;
 }
 
@@ -204,16 +192,82 @@ a {
   display: inline-block;
   width: fit-content;
   padding: 12px 18px;
-  border-radius: 12px;
-  background: #ffb040;
-  color: #111;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #6d5dfc, #3ecbff);
+  color: white;
   font-weight: bold;
-  transition: 0.22s;
+  box-shadow: 0 0 20px rgba(88,120,255,0.25);
+  transition: 0.25s;
 }
 
 .play-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(255,176,64,0.3);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+
+.search-wrap {
+  flex: 1 1 320px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(122, 188, 255, 0.14);
+  background: rgba(10, 16, 36, 0.82);
+  color: white;
+  font-size: 15px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: rgba(127,220,255,0.45);
+  box-shadow: 0 0 0 3px rgba(127,220,255,0.10);
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-btn {
+  padding: 11px 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(122, 188, 255, 0.14);
+  background: rgba(10, 16, 36, 0.82);
+  color: #dce6ff;
+  cursor: pointer;
+  transition: 0.22s;
+  font-size: 14px;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  color: #7fdcff;
+  border-color: rgba(127,220,255,0.28);
+  box-shadow: 0 0 18px rgba(90,150,255,0.10);
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #eef3ff;
+}
+
+.results-text {
+  color: #a8b5d7;
+  font-size: 14px;
+  margin-bottom: 22px;
 }
 
 .games-grid {
@@ -225,17 +279,17 @@ a {
 .card {
   display: block;
   height: 100%;
-  background: rgba(15, 15, 20, 0.94);
-  border-radius: 14px;
+  background: rgba(10, 16, 36, 0.84);
+  border-radius: 18px;
   overflow: hidden;
-  border: 1px solid rgba(255,176,64,.12);
-  transition: .25s;
+  border: 1px solid rgba(122, 188, 255, 0.10);
+  transition: 0.28s;
 }
 
 .card:hover {
-  transform: scale(1.04);
-  box-shadow: 0 0 18px rgba(255,176,64,.20);
-  border-color: rgba(255,176,64,.45);
+  transform: scale(1.03);
+  border-color: rgba(127,220,255,0.28);
+  box-shadow: 0 0 18px rgba(90,150,255,0.12);
 }
 
 .card img {
@@ -254,11 +308,12 @@ a {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 6px;
+  color: #eef3ff;
 }
 
 .card-desc {
   font-size: 14px;
-  color: #a9a9a9;
+  color: #aab8da;
   line-height: 1.4;
 }
 
@@ -266,9 +321,9 @@ a {
   display: inline-block;
   margin-top: 10px;
   font-size: 12px;
-  color: #ffcf85;
-  background: rgba(255,176,64,0.10);
-  border: 1px solid rgba(255,176,64,0.16);
+  color: #9de3ff;
+  background: rgba(90,180,255,0.10);
+  border: 1px solid rgba(122, 188, 255, 0.14);
   padding: 6px 10px;
   border-radius: 999px;
 }
@@ -277,15 +332,15 @@ a {
   display: none;
   text-align: center;
   padding: 40px 20px;
-  color: #c7c7c7;
-  background: rgba(12,12,18,0.9);
-  border: 1px solid rgba(255,176,64,0.12);
-  border-radius: 16px;
+  color: #c7d5f0;
+  background: rgba(10, 16, 36, 0.82);
+  border: 1px solid rgba(122, 188, 255, 0.10);
+  border-radius: 18px;
 }
 
 .footer {
   text-align: center;
-  color: #8c8c8c;
+  color: #8090b5;
   padding: 0 20px 30px;
   font-size: 14px;
 }
@@ -315,7 +370,7 @@ a {
   }
 
   .hero h1 {
-    font-size: 38px;
+    font-size: 40px;
   }
 
   .controls {
@@ -327,6 +382,10 @@ a {
 </head>
 
 <body>
+
+<div class="stars"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
 
 <div class="nav">
   <div class="logo">Cosmos Hub</div>
@@ -340,29 +399,24 @@ a {
 
 <div class="hero">
   <h1>Games</h1>
-  <p>All your games in one place.</p>
+  <p>Search, filter, and launch your whole library.</p>
 </div>
 
 <div class="section">
 
   <div class="featured-game">
-    <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322170/capsule_616x353.jpg?t=1703006148" alt="Featured Game">
+    <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322170/capsule_616x353.jpg?t=1703006148" alt="Geometry Dash">
     <div class="featured-content">
       <div class="featured-label">FEATURED GAME</div>
       <h2>Geometry Dash</h2>
-      <p>Fast rhythm platforming, clean design, and one of the best quick-play games on your hub.</p>
+      <p>Fast rhythm platforming with a cleaner sci-fi look across your whole hub.</p>
       <a href="play.html?game=geometrydash" class="play-btn">Play Now</a>
     </div>
   </div>
 
   <div class="controls">
     <div class="search-wrap">
-      <input
-        type="text"
-        id="searchInput"
-        class="search-input"
-        placeholder="Search games..."
-      >
+      <input type="text" id="searchInput" class="search-input" placeholder="Search games...">
     </div>
 
     <div class="filter-buttons">
@@ -399,7 +453,7 @@ a {
     </a>
 
     <a href="play.html?game=retrobowl" class="card game-card" data-category="sports">
-      <img src="https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/store/software/switch/70010000048336/e3c1297d2ec30fe72a657af60c416d10c68a784bc874cf28e19cdf9261956919" alt="Retro Bowl">
+      <img src="images/retrobowl.png" alt="Retro Bowl">
       <div class="card-content">
         <div class="card-title">Retro Bowl</div>
         <div class="card-desc">Retro football manager.</div>
@@ -408,7 +462,7 @@ a {
     </a>
 
     <a href="play.html?game=brotato" class="card game-card" data-category="action">
-      <img src="https://i0.wp.com/rogueliker.com/wp-content/uploads/2023/12/brotato.jpg?fit=6110%2C3493&ssl=1" alt="Brotato">
+      <img src="images/brotato.png" alt="Brotato">
       <div class="card-content">
         <div class="card-title">Brotato</div>
         <div class="card-desc">Arena survival shooter.</div>
@@ -417,7 +471,7 @@ a {
     </a>
 
     <a href="play.html?game=baldi" class="card game-card" data-category="horror">
-      <img src="https://m.gjcdn.net/fireside-post-image/900/39557065-7rhjvqqt-v4.webp" alt="Baldi's Basics Plus">
+      <img src="images/baldi.png" alt="Baldi's Basics Plus">
       <div class="card-content">
         <div class="card-title">Baldi's Basics Plus</div>
         <div class="card-desc">Weird horror school game.</div>
@@ -426,7 +480,7 @@ a {
     </a>
 
     <a href="play.html?game=fnaf1" class="card game-card" data-category="horror">
-      <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/319510/ss_b5bf2127754d4e9bf6ab1c94e599d47f93a6708a.1920x1080.jpg?t=1666889251" alt="FNAF 1">
+      <img src="images/fnaf1.png" alt="FNAF 1">
       <div class="card-content">
         <div class="card-title">FNAF 1</div>
         <div class="card-desc">Survive the night.</div>
@@ -435,7 +489,7 @@ a {
     </a>
 
     <a href="play.html?game=fnaf2" class="card game-card" data-category="horror">
-      <img src="https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/store/software/switch/70010000022095/faea78a0557a63a078f7e14c20cded84077b40497e37c10afd50b2c72932355e" alt="FNAF 2">
+      <img src="images/fnaf2.png" alt="FNAF 2">
       <div class="card-content">
         <div class="card-title">FNAF 2</div>
         <div class="card-desc">Classic security guard gameplay.</div>
@@ -444,7 +498,7 @@ a {
     </a>
 
     <a href="play.html?game=fnaf3" class="card game-card" data-category="horror">
-      <img src="https://m.media-amazon.com/images/I/71Pib7x9NbL.jpg" alt="FNAF 3">
+      <img src="images/fnaf3.png" alt="FNAF 3">
       <div class="card-content">
         <div class="card-title">FNAF 3</div>
         <div class="card-desc">Horror attraction simulator.</div>
@@ -453,7 +507,7 @@ a {
     </a>
 
     <a href="play.html?game=fnaf4" class="card game-card" data-category="horror">
-      <img src="https://upload.wikimedia.org/wikipedia/en/d/de/FNAF4Artwork.png" alt="FNAF 4">
+      <img src="images/fnaf4.png" alt="FNAF 4">
       <div class="card-content">
         <div class="card-title">FNAF 4</div>
         <div class="card-desc">Nightmare mode!</div>
@@ -462,7 +516,7 @@ a {
     </a>
 
     <a href="play.html?game=sisterlocation" class="card game-card" data-category="horror">
-      <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/506610/capsule_616x353.jpg?t=1579635985" alt="Sister Location">
+      <img src="images/sisterlocation.png" alt="Sister Location">
       <div class="card-content">
         <div class="card-title">Sister Location</div>
         <div class="card-desc">Animatronic horror adventure.</div>
@@ -471,7 +525,7 @@ a {
     </a>
 
     <a href="play.html?game=pizzeriasim" class="card game-card" data-category="horror">
-      <img src="https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/store/software/switch/70010000021207/88dfc4877546db18eeff30dfa891bf7ba1bbfd4544f4304341fbeafbb51c9330" alt="Pizzeria Simulator">
+      <img src="images/pizzeriasim.png" alt="Pizzeria Simulator">
       <div class="card-content">
         <div class="card-title">Pizzeria Simulator</div>
         <div class="card-desc">Manage your own pizza shop.</div>
@@ -480,7 +534,7 @@ a {
     </a>
 
     <a href="play.html?game=ucn" class="card game-card" data-category="horror">
-      <img src="https://geometry-games.io/data/image/game/ucn-ultimate-custom-night/ucn-ultimate-custom-night.png" alt="Ultimate Custom Night">
+      <img src="images/ucn.png" alt="Ultimate Custom Night">
       <div class="card-content">
         <div class="card-title">Ultimate Custom Night</div>
         <div class="card-desc">Pick your animatronic challenges.</div>
@@ -489,7 +543,7 @@ a {
     </a>
 
     <a href="play.html?game=fnafworld" class="card game-card" data-category="action">
-      <img src="https://m.gjcdn.net/game-header/1200/124921-k9fskac8-v4.webp" alt="FNAF World">
+      <img src="images/fnafworld.png" alt="FNAF World">
       <div class="card-content">
         <div class="card-title">FNAF World</div>
         <div class="card-desc">RPG style FNAF adventure.</div>
@@ -498,7 +552,7 @@ a {
     </a>
 
     <a href="play.html?game=shrekhotel" class="card game-card" data-category="horror">
-      <img src="https://m.gjcdn.net/game-thumbnail/500/902469-crop0_60_640_420-ydknwa8g-v4.webp" alt="Five Nights at Shrek's Hotel">
+      <img src="images/shrekhotel.png" alt="Five Nights at Shrek's Hotel">
       <div class="card-content">
         <div class="card-title">Five Nights at Shrek's Hotel</div>
         <div class="card-desc">Weird horror twist.</div>
@@ -507,7 +561,7 @@ a {
     </a>
 
     <a href="play.html?game=candys1" class="card game-card" data-category="horror">
-      <img src="https://m.gjcdn.net/game-thumbnail/500/70253-igzaqrw8-v4.webp" alt="Five Nights at Candy's 1">
+      <img src="images/candys1.png" alt="Five Nights at Candy's 1">
       <div class="card-content">
         <div class="card-title">Five Nights at Candy's 1</div>
         <div class="card-desc">Classic fan FNAF.</div>
@@ -516,7 +570,7 @@ a {
     </a>
 
     <a href="play.html?game=candys2" class="card game-card" data-category="horror">
-      <img src="https://m.gjcdn.net/game-header/950/110234-6cet3ztf-v4.jpg" alt="Five Nights at Candy's 2">
+      <img src="images/candys2.png" alt="Five Nights at Candy's 2">
       <div class="card-content">
         <div class="card-title">Five Nights at Candy's 2</div>
         <div class="card-desc">Sequel to Candy's 1.</div>
@@ -525,7 +579,7 @@ a {
     </a>
 
     <a href="play.html?game=brawlsimulator" class="card game-card" data-category="action">
-      <img src="https://supercell.com/images/1a5b69311180a4a1c374e10556941f05/hero_bg_brawlstars.a385872a.jpg" alt="Brawl Simulator">
+      <img src="images/brawlsimulator.png" alt="Brawl Simulator">
       <div class="card-content">
         <div class="card-title">Brawl Simulator</div>
         <div class="card-desc">Brawl Stars style simulator.</div>
@@ -534,7 +588,7 @@ a {
     </a>
 
     <a href="play.html?game=survivorio" class="card game-card" data-category="action">
-      <img src="https://i.ytimg.com/vi/pNeY_jpBrWI/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCV9ZLax2Bv0b2MDMAZhOPuXmy4ug" alt="Survivor IO">
+      <img src="images/survivorio.png" alt="Survivor IO">
       <div class="card-content">
         <div class="card-title">Survivor IO</div>
         <div class="card-desc">Multiplayer survival.</div>
@@ -543,7 +597,7 @@ a {
     </a>
 
     <a href="play.html?game=plinko" class="card game-card" data-category="arcade">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6vnAIsDBRU3vnBkJrM4wcUqbLkvxTsHWjbQ&s" alt="Plinko">
+      <img src="images/plinko.png" alt="Plinko">
       <div class="card-content">
         <div class="card-title">Plinko</div>
         <div class="card-desc">Drop the disc and win.</div>
@@ -552,7 +606,7 @@ a {
     </a>
 
     <a href="play.html?game=ironlung" class="card game-card" data-category="horror">
-      <img src="https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000060913/1d825d77d4a37747fbed529203a93266d97f29ccbaddbe022af52a55b477bafe" alt="Iron Lung">
+      <img src="images/ironlung.png" alt="Iron Lung">
       <div class="card-content">
         <div class="card-title">Iron Lung</div>
         <div class="card-desc">Horror submarine survival.</div>
@@ -561,7 +615,7 @@ a {
     </a>
 
     <a href="play.html?game=cloverpit" class="card game-card" data-category="puzzle">
-      <img src="https://static0.dualshockersimages.com/wordpress/wp-content/uploads/2025/09/image-130.jpeg?w=1200&h=675&fit=crop" alt="Clover Pit">
+      <img src="images/cloverpit.png" alt="Clover Pit">
       <div class="card-content">
         <div class="card-title">Clover Pit</div>
         <div class="card-desc">Puzzle platformer.</div>
@@ -570,7 +624,7 @@ a {
     </a>
 
     <a href="play.html?game=fivenightsatepsteins" class="card game-card" data-category="horror">
-      <img src="https://i.ytimg.com/vi/BXkGPjy4pBE/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBdQID0G_L4yk3ZCFXg8CR_IFtFRQ" alt="Five Nights at Epstein's">
+      <img src="images/fivenightsatepsteins.png" alt="Five Nights at Epstein's">
       <div class="card-content">
         <div class="card-title">Five Nights at Epstein's</div>
         <div class="card-desc">Creepy fan game.</div>
@@ -579,7 +633,7 @@ a {
     </a>
 
     <a href="play.html?game=bartblast" class="card game-card" data-category="arcade">
-      <img src="https://i.ytimg.com/vi/ykpyLFsbaJc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAmZqJNEHEQoAkunPgzF0IZH0XXow" alt="Bart Blast">
+      <img src="images/bartblast.png" alt="Bart Blast">
       <div class="card-content">
         <div class="card-title">Bart Blast</div>
         <div class="card-desc">Arcade fun.</div>
@@ -588,7 +642,7 @@ a {
     </a>
 
     <a href="play.html?game=fused" class="card game-card" data-category="puzzle">
-      <img src="https://i.ytimg.com/vi/_oyO5i-tpAg/maxresdefault.jpg" alt="Fused">
+      <img src="images/fused.png" alt="Fused">
       <div class="card-content">
         <div class="card-title">Fused</div>
         <div class="card-desc">Puzzle combat game.</div>
@@ -597,7 +651,7 @@ a {
     </a>
 
     <a href="play.html?game=christmasmassacre" class="card game-card" data-category="action">
-      <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1840490/capsule_616x353.jpg?t=1671911494" alt="Christmas Massacre">
+      <img src="images/christmasmassacre.png" alt="Christmas Massacre">
       <div class="card-content">
         <div class="card-title">Christmas Massacre</div>
         <div class="card-desc">Holiday themed action game.</div>
@@ -606,7 +660,7 @@ a {
     </a>
 
     <a href="play.html?game=cellmachine" class="card game-card" data-category="puzzle">
-      <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2435630/header.jpg?t=1730734588" alt="Cell Machine">
+      <img src="images/cellmachine.png" alt="Cell Machine">
       <div class="card-content">
         <div class="card-title">Cell Machine</div>
         <div class="card-desc">Creative puzzle builder.</div>
@@ -655,17 +709,13 @@ function updateGames() {
     }
   });
 
-  if (visibleCount === 0) {
-    noResults.style.display = "block";
-  } else {
-    noResults.style.display = "none";
-  }
+  noResults.style.display = visibleCount === 0 ? "block" : "none";
 
   if (activeCategory === "all" && searchValue === "") {
     resultsText.textContent = "Showing all games";
   } else if (activeCategory !== "all" && searchValue === "") {
     resultsText.textContent = `Showing ${visibleCount} ${activeCategory} game${visibleCount === 1 ? "" : "s"}`;
-  } else if (activeCategory === "all" && searchValue !== "") {
+  } else if (activeCategory === "all") {
     resultsText.textContent = `Found ${visibleCount} game${visibleCount === 1 ? "" : "s"} for "${searchInput.value}"`;
   } else {
     resultsText.textContent = `Found ${visibleCount} ${activeCategory} game${visibleCount === 1 ? "" : "s"} for "${searchInput.value}"`;

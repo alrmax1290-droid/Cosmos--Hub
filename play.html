@@ -17,13 +17,57 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
   background:
-    radial-gradient(circle at top, rgba(113, 55, 255, 0.28) 0%, rgba(40, 20, 80, 0.12) 18%, transparent 36%),
-    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.10) 0 1px, transparent 1px),
-    radial-gradient(circle at 75% 30%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
-    radial-gradient(circle at 35% 75%, rgba(255,255,255,0.06) 0 1px, transparent 1px),
-    radial-gradient(circle at top, #141414 0%, #070711 45%, #000 100%);
-  background-size: auto, 180px 180px, 240px 240px, 300px 300px, auto;
+    radial-gradient(circle at top, rgba(88, 63, 188, 0.35) 0%, rgba(25, 18, 60, 0.18) 20%, transparent 38%),
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.10) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.06) 0 1px, transparent 1px),
+    linear-gradient(180deg, #050816 0%, #03030a 100%);
+  background-size: auto, 180px 180px, 260px 260px, 320px 320px, auto;
+}
+
+.stars,
+.stars2,
+.stars3 {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.stars {
+  background:
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent);
+  background-repeat: repeat;
+  background-size: 220px 220px;
+  animation: moveStars 100s linear infinite;
+  opacity: 0.6;
+}
+
+.stars2 {
+  background:
+    radial-gradient(1.5px 1.5px at 50px 50px, rgba(130,180,255,0.8), transparent),
+    radial-gradient(2px 2px at 100px 150px, rgba(255,255,255,0.7), transparent);
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  animation: moveStars 160s linear infinite;
+  opacity: 0.38;
+}
+
+.stars3 {
+  background:
+    radial-gradient(2px 2px at 80px 20px, rgba(170,140,255,0.7), transparent);
+  background-repeat: repeat;
+  background-size: 360px 360px;
+  animation: moveStars 220s linear infinite;
+  opacity: 0.28;
+}
+
+@keyframes moveStars {
+  from { transform: translateY(0); }
+  to { transform: translateY(-220px); }
 }
 
 .topbar {
@@ -31,9 +75,9 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 14px 20px;
-  background: rgba(0, 0, 0, 0.88);
-  border-bottom: 1px solid rgba(255,176,64,0.18);
-  backdrop-filter: blur(10px);
+  background: rgba(6, 10, 24, 0.72);
+  border-bottom: 1px solid rgba(120, 170, 255, 0.16);
+  backdrop-filter: blur(14px);
 }
 
 .brand {
@@ -45,16 +89,17 @@ body {
 .brand-name {
   font-size: 22px;
   font-weight: bold;
-  color: #ffb040;
+  color: #c9d7ff;
+  text-shadow: 0 0 12px rgba(120,180,255,0.35);
 }
 
 .game-title {
   font-size: 14px;
-  color: #c7c7d7;
+  color: #b7c2e3;
 }
 
 .topbar a {
-  color: #ffb040;
+  color: #7fdcff;
   text-decoration: none;
   font-weight: bold;
 }
@@ -68,9 +113,9 @@ body {
   width: 100%;
   height: 100%;
   border: none;
-  border-radius: 16px;
+  border-radius: 18px;
   background: #000;
-  box-shadow: 0 0 20px rgba(120, 80, 255, 0.08);
+  box-shadow: 0 0 24px rgba(90,120,255,0.12);
 }
 
 .message {
@@ -80,13 +125,17 @@ body {
   justify-content: center;
   text-align: center;
   padding: 30px;
-  color: #d0d0de;
+  color: #d0daf3;
   font-size: 22px;
 }
 </style>
 </head>
 
 <body>
+
+<div class="stars"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
 
 <div class="topbar">
   <div class="brand">

@@ -6,88 +6,685 @@
 <title>Games - Cosmos Hub</title>
 
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:radial-gradient(circle at top,#151515 0%,#050505 40%,#000 100%);color:white;}
-a{text-decoration:none;color:inherit}
-.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;background:rgba(0,0,0,.9);border-bottom:1px solid rgba(255,176,64,.2);position:sticky;top:0;}
-.logo{font-size:24px;font-weight:bold;color:#ffb040;}
-.nav-links{display:flex;gap:20px;flex-wrap:wrap;}
-.nav-links a:hover{color:#ffb040;}
-.hero{text-align:center;padding:55px 20px 25px;}
-.hero h1{margin:0;font-size:48px;}
-.hero p{margin-top:10px;color:#c7c7c7;}
-.section{max-width:1300px;margin:auto;padding:20px 20px 60px;}
-.section-title{font-size:28px;margin-bottom:20px;}
-.games-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
-.card{background:#111;border-radius:14px;overflow:hidden;border:1px solid rgba(255,176,64,.12);transition:.25s;}
-.card:hover{transform:scale(1.05);box-shadow:0 0 18px rgba(255,176,64,.25);}
-.card img{width:100%;height:145px;object-fit:cover;}
-.card-content{padding:12px;}
-.card-title{font-size:18px;font-weight:bold;}
-.card-desc{font-size:14px;color:#a9a9a9;}
-.footer{text-align:center;color:#8c8c8c;padding-bottom:30px;}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(90, 30, 160, 0.35) 0%, rgba(15, 15, 30, 0.15) 18%, transparent 35%),
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.05) 0 1px, transparent 1px),
+    radial-gradient(circle at top, #151515 0%, #070711 45%, #000 100%);
+  background-size: auto, 180px 180px, 240px 240px, 300px 300px, auto;
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 28px;
+  background: rgba(0, 0, 0, 0.88);
+  border-bottom: 1px solid rgba(255, 176, 64, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffb040;
+  letter-spacing: 0.5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  transition: 0.25s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #ffb040;
+}
+
+.hero {
+  text-align: center;
+  padding: 55px 20px 25px;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 48px;
+}
+
+.hero p {
+  margin-top: 10px;
+  color: #c7c7c7;
+  font-size: 16px;
+}
+
+.section {
+  max-width: 1300px;
+  margin: auto;
+  padding: 20px 20px 60px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+
+.search-wrap {
+  flex: 1 1 320px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 176, 64, 0.18);
+  background: rgba(18, 18, 24, 0.92);
+  color: white;
+  font-size: 15px;
+  outline: none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+}
+
+.search-input:focus {
+  border-color: rgba(255, 176, 64, 0.55);
+  box-shadow: 0 0 0 3px rgba(255, 176, 64, 0.12);
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-btn {
+  padding: 11px 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 176, 64, 0.18);
+  background: rgba(15, 15, 20, 0.92);
+  color: #ddd;
+  cursor: pointer;
+  transition: 0.22s;
+  font-size: 14px;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  color: #fff;
+  border-color: rgba(255, 176, 64, 0.65);
+  background: rgba(255, 176, 64, 0.14);
+  box-shadow: 0 0 18px rgba(255, 176, 64, 0.12);
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.results-text {
+  color: #b5b5b5;
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+
+.featured-game {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 22px;
+  background:
+    linear-gradient(135deg, rgba(255,176,64,0.12), rgba(120,80,255,0.08)),
+    rgba(10,10,14,0.92);
+  border: 1px solid rgba(255,176,64,0.18);
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  box-shadow: 0 0 30px rgba(255,176,64,0.08);
+}
+
+.featured-game img {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+.featured-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.featured-label {
+  color: #ffb040;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.featured-content h2 {
+  margin: 0 0 10px;
+  font-size: 34px;
+}
+
+.featured-content p {
+  margin: 0 0 18px;
+  color: #c7c7c7;
+  line-height: 1.5;
+}
+
+.play-btn {
+  display: inline-block;
+  width: fit-content;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: #ffb040;
+  color: #111;
+  font-weight: bold;
+  transition: 0.22s;
+}
+
+.play-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(255,176,64,0.3);
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  display: block;
+  height: 100%;
+  background: rgba(15, 15, 20, 0.94);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,176,64,.12);
+  transition: .25s;
+}
+
+.card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 18px rgba(255,176,64,.20);
+  border-color: rgba(255,176,64,.45);
+}
+
+.card img {
+  width: 100%;
+  height: 145px;
+  object-fit: cover;
+  display: block;
+  background: #000;
+}
+
+.card-content {
+  padding: 12px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: #a9a9a9;
+  line-height: 1.4;
+}
+
+.card-tag {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #ffcf85;
+  background: rgba(255,176,64,0.10);
+  border: 1px solid rgba(255,176,64,0.16);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.no-results {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+  color: #c7c7c7;
+  background: rgba(12,12,18,0.9);
+  border: 1px solid rgba(255,176,64,0.12);
+  border-radius: 16px;
+}
+
+.footer {
+  text-align: center;
+  color: #8c8c8c;
+  padding: 0 20px 30px;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .featured-game {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-content h2 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav {
+    padding: 14px 18px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .nav-links {
+    gap: 14px;
+    font-size: 14px;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <div class="nav">
-<div class="logo">Cosmos Hub</div>
-<div class="nav-links">
-<a href="index.html">Home</a>
-<a href="my-games.html">Games</a>
-<a href="movies.html">Movies</a>
-<a href="music.html">Music</a>
-</div>
+  <div class="logo">Cosmos Hub</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="my-games.html" class="active">Games</a>
+    <a href="movies.html">Movies</a>
+    <a href="music.html">Music</a>
+  </div>
 </div>
 
 <div class="hero">
-<h1>Games</h1>
-<p>All your games in one place.</p>
+  <h1>Games</h1>
+  <p>All your games in one place.</p>
 </div>
 
 <div class="section">
-<div class="section-title">All Games</div>
-<div class="games-grid">
 
-<!-- First set of games -->
-<a href="play.html?game=geometrydash" class="card"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322170/capsule_616x353.jpg?t=1703006148"><div class="card-content"><div class="card-title">Geometry Dash</div><div class="card-desc">Rhythm platformer.</div></div></a>
-<a href="play.html?game=ovo" class="card"><img src="https://www.coolmathgames.com/sites/default/files/OvO_OG-logo.jpg"><div class="card-content"><div class="card-title">OVO</div><div class="card-desc">Parkour platformer.</div></div></a>
-<a href="play.html?game=retrobowl" class="card"><img src="images/retrobowl.png"><div class="card-content"><div class="card-title">Retro Bowl</div><div class="card-desc">Retro football manager.</div></div></a>
-<a href="play.html?game=brotato" class="card"><img src="images/brotato.png"><div class="card-content"><div class="card-title">Brotato</div><div class="card-desc">Arena survival shooter.</div></div></a>
-<a href="play.html?game=baldi" class="card"><img src="images/baldi.png"><div class="card-content"><div class="card-title">Baldi's Basics Plus</div><div class="card-desc">Weird horror school game.</div></div></a>
-<a href="play.html?game=fnaf1" class="card"><img src="images/fnaf1.png"><div class="card-content"><div class="card-title">FNAF 1</div><div class="card-desc">Survive the night.</div></div></a>
-<a href="play.html?game=fnaf2" class="card"><img src="images/fnaf2.png"><div class="card-content"><div class="card-title">FNAF 2</div><div class="card-desc">Classic security guard gameplay.</div></div></a>
-<a href="play.html?game=fnaf3" class="card"><img src="images/fnaf3.png"><div class="card-content"><div class="card-title">FNAF 3</div><div class="card-desc">Horror attraction simulator.</div></div></a>
-<a href="play.html?game=fnaf4" class="card"><img src="images/fnaf4.png"><div class="card-content"><div class="card-title">FNAF 4</div><div class="card-desc">Nightmare mode!</div></div></a>
+  <div class="featured-game">
+    <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322170/capsule_616x353.jpg?t=1703006148" alt="Featured Game">
+    <div class="featured-content">
+      <div class="featured-label">FEATURED GAME</div>
+      <h2>Geometry Dash</h2>
+      <p>Fast rhythm platforming, clean design, and one of the best quick-play games on your hub.</p>
+      <a href="play.html?game=geometrydash" class="play-btn">Play Now</a>
+    </div>
+  </div>
 
-<!-- Second set -->
-<a href="play.html?game=sisterlocation" class="card"><img src="images/sisterlocation.png"><div class="card-content"><div class="card-title">Sister Location</div><div class="card-desc">Animatronic horror adventure.</div></div></a>
-<a href="play.html?game=pizzeriasim" class="card"><img src="images/pizzeriasim.png"><div class="card-content"><div class="card-title">Pizzeria Simulator</div><div class="card-desc">Manage your own pizza shop.</div></div></a>
-<a href="play.html?game=ucn" class="card"><img src="images/ucn.png"><div class="card-content"><div class="card-title">Ultimate Custom Night</div><div class="card-desc">Pick your animatronic challenges.</div></div></a>
-<a href="play.html?game=fnafworld" class="card"><img src="images/fnafworld.png"><div class="card-content"><div class="card-title">FNAF World</div><div class="card-desc">RPG style FNAF adventure.</div></div></a>
-<a href="play.html?game=shrekhotel" class="card"><img src="images/shrekhotel.png"><div class="card-content"><div class="card-title">Five Nights at Shrek's Hotel</div><div class="card-desc">Weird horror twist.</div></div></a>
-<a href="play.html?game=candys1" class="card"><img src="images/candys1.png"><div class="card-content"><div class="card-title">Five Nights at Candy's 1</div><div class="card-desc">Classic fan FNAF.</div></div></a>
-<a href="play.html?game=candys2" class="card"><img src="images/candys2.png"><div class="card-content"><div class="card-title">Five Nights at Candy's 2</div><div class="card-desc">Sequel to Candy's 1.</div></div></a>
-<a href="play.html?game=brawlsimulator" class="card"><img src="images/brawlsimulator.png"><div class="card-content"><div class="card-title">Brawl Simulator</div><div class="card-desc">Brawl Stars style simulator.</div></div></a>
-<a href="play.html?game=survivorio" class="card"><img src="images/survivorio.png"><div class="card-content"><div class="card-title">Survivor IO</div><div class="card-desc">Multiplayer survival.</div></div></a>
+  <div class="controls">
+    <div class="search-wrap">
+      <input
+        type="text"
+        id="searchInput"
+        class="search-input"
+        placeholder="Search games..."
+      >
+    </div>
 
-<!-- Third set -->
-<a href="play.html?game=plinko" class="card"><img src="images/plinko.png"><div class="card-content"><div class="card-title">Plinko</div><div class="card-desc">Drop the disc and win.</div></div></a>
-<a href="play.html?game=ironlung" class="card"><img src="images/ironlung.png"><div class="card-content"><div class="card-title">Iron Lung</div><div class="card-desc">Horror submarine survival.</div></div></a>
-<a href="play.html?game=cloverpit" class="card"><img src="images/cloverpit.png"><div class="card-content"><div class="card-title">Clover Pit</div><div class="card-desc">Puzzle platformer.</div></div></a>
-<a href="play.html?game=fivenightsatepsteins" class="card"><img src="images/fivenightsatepsteins.png"><div class="card-content"><div class="card-title">Five Nights at Epstein's</div><div class="card-desc">Creepy fan game.</div></div></a>
-<a href="play.html?game=bartblast" class="card"><img src="images/bartblast.png"><div class="card-content"><div class="card-title">Bart Blast</div><div class="card-desc">Arcade fun.</div></div></a>
-<a href="play.html?game=fused" class="card"><img src="images/fused.png"><div class="card-content"><div class="card-title">Fused</div><div class="card-desc">Puzzle combat game.</div></div></a>
-<a href="play.html?game=christmasmassacre" class="card"><img src="images/christmasmassacre.png"><div class="card-content"><div class="card-title">Christmas Massacre</div><div class="card-desc">Holiday themed shooter.</div></div></a>
-<a href="play.html?game=cellmachine" class="card"><img src="images/cellmachine.png"><div class="card-content"><div class="card-title">Cell Machine</div><div class="card-desc">Creative puzzle builder.</div></div></a>
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-category="all">All</button>
+      <button class="filter-btn" data-category="horror">Horror</button>
+      <button class="filter-btn" data-category="arcade">Arcade</button>
+      <button class="filter-btn" data-category="sports">Sports</button>
+      <button class="filter-btn" data-category="puzzle">Puzzle</button>
+      <button class="filter-btn" data-category="action">Action</button>
+    </div>
+  </div>
 
-</div>
+  <div class="section-title">All Games</div>
+  <div class="results-text" id="resultsText">Showing all games</div>
+
+  <div class="games-grid" id="gamesGrid">
+
+    <a href="play.html?game=geometrydash" class="card game-card" data-category="arcade">
+      <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322170/capsule_616x353.jpg?t=1703006148" alt="Geometry Dash">
+      <div class="card-content">
+        <div class="card-title">Geometry Dash</div>
+        <div class="card-desc">Rhythm platformer.</div>
+        <div class="card-tag">Arcade</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=ovo" class="card game-card" data-category="arcade">
+      <img src="https://www.coolmathgames.com/sites/default/files/OvO_OG-logo.jpg" alt="OVO">
+      <div class="card-content">
+        <div class="card-title">OVO</div>
+        <div class="card-desc">Parkour platformer.</div>
+        <div class="card-tag">Arcade</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=retrobowl" class="card game-card" data-category="sports">
+      <img src="images/retrobowl.png" alt="Retro Bowl">
+      <div class="card-content">
+        <div class="card-title">Retro Bowl</div>
+        <div class="card-desc">Retro football manager.</div>
+        <div class="card-tag">Sports</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=brotato" class="card game-card" data-category="action">
+      <img src="images/brotato.png" alt="Brotato">
+      <div class="card-content">
+        <div class="card-title">Brotato</div>
+        <div class="card-desc">Arena survival shooter.</div>
+        <div class="card-tag">Action</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=baldi" class="card game-card" data-category="horror">
+      <img src="images/baldi.png" alt="Baldi's Basics Plus">
+      <div class="card-content">
+        <div class="card-title">Baldi's Basics Plus</div>
+        <div class="card-desc">Weird horror school game.</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=fnaf1" class="card game-card" data-category="horror">
+      <img src="images/fnaf1.png" alt="FNAF 1">
+      <div class="card-content">
+        <div class="card-title">FNAF 1</div>
+        <div class="card-desc">Survive the night.</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=fnaf2" class="card game-card" data-category="horror">
+      <img src="images/fnaf2.png" alt="FNAF 2">
+      <div class="card-content">
+        <div class="card-title">FNAF 2</div>
+        <div class="card-desc">Classic security guard gameplay.</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=fnaf3" class="card game-card" data-category="horror">
+      <img src="images/fnaf3.png" alt="FNAF 3">
+      <div class="card-content">
+        <div class="card-title">FNAF 3</div>
+        <div class="card-desc">Horror attraction simulator.</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=fnaf4" class="card game-card" data-category="horror">
+      <img src="images/fnaf4.png" alt="FNAF 4">
+      <div class="card-content">
+        <div class="card-title">FNAF 4</div>
+        <div class="card-desc">Nightmare mode!</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=sisterlocation" class="card game-card" data-category="horror">
+      <img src="images/sisterlocation.png" alt="Sister Location">
+      <div class="card-content">
+        <div class="card-title">Sister Location</div>
+        <div class="card-desc">Animatronic horror adventure.</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=pizzeriasim" class="card game-card" data-category="horror">
+      <img src="images/pizzeriasim.png" alt="Pizzeria Simulator">
+      <div class="card-content">
+        <div class="card-title">Pizzeria Simulator</div>
+        <div class="card-desc">Manage your own pizza shop.</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=ucn" class="card game-card" data-category="horror">
+      <img src="images/ucn.png" alt="Ultimate Custom Night">
+      <div class="card-content">
+        <div class="card-title">Ultimate Custom Night</div>
+        <div class="card-desc">Pick your animatronic challenges.</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=fnafworld" class="card game-card" data-category="action">
+      <img src="images/fnafworld.png" alt="FNAF World">
+      <div class="card-content">
+        <div class="card-title">FNAF World</div>
+        <div class="card-desc">RPG style FNAF adventure.</div>
+        <div class="card-tag">Action</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=shrekhotel" class="card game-card" data-category="horror">
+      <img src="images/shrekhotel.png" alt="Five Nights at Shrek's Hotel">
+      <div class="card-content">
+        <div class="card-title">Five Nights at Shrek's Hotel</div>
+        <div class="card-desc">Weird horror twist.</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=candys1" class="card game-card" data-category="horror">
+      <img src="images/candys1.png" alt="Five Nights at Candy's 1">
+      <div class="card-content">
+        <div class="card-title">Five Nights at Candy's 1</div>
+        <div class="card-desc">Classic fan FNAF.</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=candys2" class="card game-card" data-category="horror">
+      <img src="images/candys2.png" alt="Five Nights at Candy's 2">
+      <div class="card-content">
+        <div class="card-title">Five Nights at Candy's 2</div>
+        <div class="card-desc">Sequel to Candy's 1.</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=brawlsimulator" class="card game-card" data-category="action">
+      <img src="images/brawlsimulator.png" alt="Brawl Simulator">
+      <div class="card-content">
+        <div class="card-title">Brawl Simulator</div>
+        <div class="card-desc">Brawl Stars style simulator.</div>
+        <div class="card-tag">Action</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=survivorio" class="card game-card" data-category="action">
+      <img src="images/survivorio.png" alt="Survivor IO">
+      <div class="card-content">
+        <div class="card-title">Survivor IO</div>
+        <div class="card-desc">Multiplayer survival.</div>
+        <div class="card-tag">Action</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=plinko" class="card game-card" data-category="arcade">
+      <img src="images/plinko.png" alt="Plinko">
+      <div class="card-content">
+        <div class="card-title">Plinko</div>
+        <div class="card-desc">Drop the disc and win.</div>
+        <div class="card-tag">Arcade</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=ironlung" class="card game-card" data-category="horror">
+      <img src="images/ironlung.png" alt="Iron Lung">
+      <div class="card-content">
+        <div class="card-title">Iron Lung</div>
+        <div class="card-desc">Horror submarine survival.</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=cloverpit" class="card game-card" data-category="puzzle">
+      <img src="images/cloverpit.png" alt="Clover Pit">
+      <div class="card-content">
+        <div class="card-title">Clover Pit</div>
+        <div class="card-desc">Puzzle platformer.</div>
+        <div class="card-tag">Puzzle</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=fivenightsatepsteins" class="card game-card" data-category="horror">
+      <img src="images/fivenightsatepsteins.png" alt="Five Nights at Epstein's">
+      <div class="card-content">
+        <div class="card-title">Five Nights at Epstein's</div>
+        <div class="card-desc">Creepy fan game.</div>
+        <div class="card-tag">Horror</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=bartblast" class="card game-card" data-category="arcade">
+      <img src="images/bartblast.png" alt="Bart Blast">
+      <div class="card-content">
+        <div class="card-title">Bart Blast</div>
+        <div class="card-desc">Arcade fun.</div>
+        <div class="card-tag">Arcade</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=fused" class="card game-card" data-category="puzzle">
+      <img src="images/fused.png" alt="Fused">
+      <div class="card-content">
+        <div class="card-title">Fused</div>
+        <div class="card-desc">Puzzle combat game.</div>
+        <div class="card-tag">Puzzle</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=christmasmassacre" class="card game-card" data-category="action">
+      <img src="images/christmasmassacre.png" alt="Christmas Massacre">
+      <div class="card-content">
+        <div class="card-title">Christmas Massacre</div>
+        <div class="card-desc">Holiday themed action game.</div>
+        <div class="card-tag">Action</div>
+      </div>
+    </a>
+
+    <a href="play.html?game=cellmachine" class="card game-card" data-category="puzzle">
+      <img src="images/cellmachine.png" alt="Cell Machine">
+      <div class="card-content">
+        <div class="card-title">Cell Machine</div>
+        <div class="card-desc">Creative puzzle builder.</div>
+        <div class="card-tag">Puzzle</div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="no-results" id="noResults">
+    No games matched your search.
+  </div>
+
 </div>
 
 <div class="footer">
-© 2026 Cosmos Hub
+  © 2026 Cosmos Hub
 </div>
+
+<script>
+const searchInput = document.getElementById("searchInput");
+const filterButtons = document.querySelectorAll(".filter-btn");
+const gameCards = document.querySelectorAll(".game-card");
+const resultsText = document.getElementById("resultsText");
+const noResults = document.getElementById("noResults");
+
+let activeCategory = "all";
+
+function updateGames() {
+  const searchValue = searchInput.value.toLowerCase().trim();
+  let visibleCount = 0;
+
+  gameCards.forEach(card => {
+    const title = card.querySelector(".card-title").textContent.toLowerCase();
+    const desc = card.querySelector(".card-desc").textContent.toLowerCase();
+    const category = card.dataset.category.toLowerCase();
+
+    const matchesSearch = title.includes(searchValue) || desc.includes(searchValue);
+    const matchesCategory = activeCategory === "all" || category === activeCategory;
+
+    if (matchesSearch && matchesCategory) {
+      card.style.display = "block";
+      visibleCount++;
+    } else {
+      card.style.display = "none";
+    }
+  });
+
+  if (visibleCount === 0) {
+    noResults.style.display = "block";
+  } else {
+    noResults.style.display = "none";
+  }
+
+  if (activeCategory === "all" && searchValue === "") {
+    resultsText.textContent = "Showing all games";
+  } else if (activeCategory !== "all" && searchValue === "") {
+    resultsText.textContent = `Showing ${visibleCount} ${activeCategory} game${visibleCount === 1 ? "" : "s"}`;
+  } else if (activeCategory === "all" && searchValue !== "") {
+    resultsText.textContent = `Found ${visibleCount} game${visibleCount === 1 ? "" : "s"} for "${searchInput.value}"`;
+  } else {
+    resultsText.textContent = `Found ${visibleCount} ${activeCategory} game${visibleCount === 1 ? "" : "s"} for "${searchInput.value}"`;
+  }
+}
+
+searchInput.addEventListener("input", updateGames);
+
+filterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    filterButtons.forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+    activeCategory = button.dataset.category;
+    updateGames();
+  });
+});
+
+updateGames();
+</script>
 
 </body>
 </html>

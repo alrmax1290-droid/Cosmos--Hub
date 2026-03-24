@@ -12,12 +12,18 @@
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top, #151515 0%, #050505 40%, #000 100%);
   font-family: Arial, sans-serif;
   color: white;
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(113, 55, 255, 0.28) 0%, rgba(40, 20, 80, 0.12) 18%, transparent 36%),
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.10) 0 1px, transparent 1px),
+    radial-gradient(circle at 75% 30%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
+    radial-gradient(circle at 35% 75%, rgba(255,255,255,0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at top, #141414 0%, #070711 45%, #000 100%);
+  background-size: auto, 180px 180px, 240px 240px, 300px 300px, auto;
 }
 
 .topbar {
@@ -25,8 +31,9 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 14px 20px;
-  background: rgba(0, 0, 0, 0.92);
-  border-bottom: 1px solid rgba(255, 176, 64, 0.2);
+  background: rgba(0, 0, 0, 0.88);
+  border-bottom: 1px solid rgba(255,176,64,0.18);
+  backdrop-filter: blur(10px);
 }
 
 .brand {
@@ -43,17 +50,13 @@ body {
 
 .game-title {
   font-size: 14px;
-  color: #c7c7c7;
+  color: #c7c7d7;
 }
 
 .topbar a {
   color: #ffb040;
   text-decoration: none;
   font-weight: bold;
-}
-
-.topbar a:hover {
-  opacity: 0.9;
 }
 
 .frame-wrap {
@@ -65,8 +68,9 @@ body {
   width: 100%;
   height: 100%;
   border: none;
-  border-radius: 14px;
+  border-radius: 16px;
   background: #000;
+  box-shadow: 0 0 20px rgba(120, 80, 255, 0.08);
 }
 
 .message {
@@ -76,7 +80,7 @@ body {
   justify-content: center;
   text-align: center;
   padding: 30px;
-  color: #d0d0d0;
+  color: #d0d0de;
   font-size: 22px;
 }
 </style>
@@ -105,126 +109,36 @@ const params = new URLSearchParams(window.location.search);
 const game = params.get("game");
 
 const games = {
-  geometrydash: {
-    title: "Geometry Dash",
-    url: "https://alrmax1290-droid.github.io/GEOMETRYDASH/"
-  },
-  ovo: {
-    title: "OVO",
-    url: "https://alrmax1290-droid.github.io/OVO/"
-  },
-  retrobowl: {
-    title: "Retro Bowl",
-    url: "https://alrmax1290-droid.github.io/RETROBOWL/"
-  },
-  brotato: {
-    title: "Brotato",
-    url: "https://alrmax1290-droid.github.io/BROTATO/"
-  },
-  baldi: {
-    title: "Baldi's Basics Plus",
-    url: "https://alrmax1290-droid.github.io/BaldisBasics-/"
-  },
-  halflife2: {
-    title: "Half-Life 2",
-    url: "https://alrmax1290-droid.github.io/HalfLife/"
-  },
-  snowrider: {
-    title: "Snow Rider 3D",
-    url: "https://alrmax1290-droid.github.io/SNOWRIDER3D/"
-  },
-  blockblast: {
-    title: "Block Blast",
-    url: "https://alrmax1290-droid.github.io/block-blast/"
-  },
-  cellmachine: {
-    title: "Cell Machine",
-    url: "https://alrmax1290-droid.github.io/CellMachine/"
-  },
-  isaac: {
-    title: "The Binding of Isaac",
-    url: "https://alrmax1290-droid.github.io/BINDINGOFISAAC1/"
-  },
-  fnaf1: {
-    title: "FNAF 1",
-    url: "https://alrmax1290-droid.github.io/fnaf1/"
-  },
-  fnaf2: {
-    title: "FNAF 2",
-    url: "https://alrmax1290-droid.github.io/fnaf2/"
-  },
-  fnaf3: {
-    title: "FNAF 3",
-    url: "https://alrmax1290-droid.github.io/fnaf3/"
-  },
-  fnaf4: {
-    title: "FNAF 4",
-    url: "https://alrmax1290-droid.github.io/fnaf4/"
-  },
-  sisterlocation: {
-    title: "Sister Location",
-    url: "https://alrmax1290-droid.github.io/fnafsl/"
-  },
-  pizzeriasim: {
-    title: "Pizzeria Simulator",
-    url: "https://alrmax1290-droid.github.io/fnafps/"
-  },
-  ucn: {
-    title: "Ultimate Custom Night",
-    url: "https://alrmax1290-droid.github.io/fnafucn/"
-  },
-  fnafworld: {
-    title: "FNAF World",
-    url: "https://alrmax1290-droid.github.io/fnafworld/"
-  },
-  shrekhotel: {
-    title: "Five Nights at Shrek's Hotel",
-    url: "https://alrmax1290-droid.github.io/fnas/"
-  },
-  candys1: {
-    title: "Five Nights at Candy's 1",
-    url: "https://alrmax1290-droid.github.io/fnac/"
-  },
-  candys2: {
-    title: "Five Nights at Candy's 2",
-    url: "https://alrmax1290-droid.github.io/fnac2/"
-  },
-  brawlsimulator: {
-    title: "Brawl Simulator",
-    url: "https://alrmax1290-droid.github.io/brawlsimulator/"
-  },
-  survivorio: {
-    title: "Survivor IO",
-    url: "https://alrmax1290-droid.github.io/SURVIVORIO/"
-  },
-  plinko: {
-    title: "Plinko",
-    url: "https://alrmax1290-droid.github.io/PLINKO/"
-  },
-  ironlung: {
-    title: "Iron Lung",
-    url: "https://alrmax1290-droid.github.io/IRONGLOUNG/"
-  },
-  cloverpit: {
-    title: "Clover Pit",
-    url: "https://alrmax1290-droid.github.io/CLOVERPIT/"
-  },
-  fivenightsatepsteins: {
-    title: "Five Nights at Epstein's",
-    url: "https://alrmax1290-droid.github.io/Five-Nights-at-Epsteins/"
-  },
-  bartblast: {
-    title: "Bart Blast",
-    url: "https://alrmax1290-droid.github.io/BARTBLAST/"
-  },
-  fused: {
-    title: "Fused",
-    url: "https://alrmax1290-droid.github.io/Fused/"
-  },
-  christmasmassacre: {
-    title: "Christmas Massacre",
-    url: "https://alrmax1290-droid.github.io/ChristmasMassacre/"
-  }
+  geometrydash: { title: "Geometry Dash", url: "https://alrmax1290-droid.github.io/GEOMETRYDASH/" },
+  ovo: { title: "OVO", url: "https://alrmax1290-droid.github.io/OVO/" },
+  retrobowl: { title: "Retro Bowl", url: "https://alrmax1290-droid.github.io/RETROBOWL/" },
+  brotato: { title: "Brotato", url: "https://alrmax1290-droid.github.io/BROTATO/" },
+  baldi: { title: "Baldi's Basics Plus", url: "https://alrmax1290-droid.github.io/BaldisBasics-/" },
+  halflife2: { title: "Half-Life 2", url: "https://alrmax1290-droid.github.io/HalfLife/" },
+  snowrider: { title: "Snow Rider 3D", url: "https://alrmax1290-droid.github.io/SNOWRIDER3D/" },
+  blockblast: { title: "Block Blast", url: "https://alrmax1290-droid.github.io/block-blast/" },
+  cellmachine: { title: "Cell Machine", url: "https://alrmax1290-droid.github.io/CellMachine/" },
+  isaac: { title: "The Binding of Isaac", url: "https://alrmax1290-droid.github.io/BINDINGOFISAAC1/" },
+  fnaf1: { title: "FNAF 1", url: "https://alrmax1290-droid.github.io/fnaf1/" },
+  fnaf2: { title: "FNAF 2", url: "https://alrmax1290-droid.github.io/fnaf2/" },
+  fnaf3: { title: "FNAF 3", url: "https://alrmax1290-droid.github.io/fnaf3/" },
+  fnaf4: { title: "FNAF 4", url: "https://alrmax1290-droid.github.io/fnaf4/" },
+  sisterlocation: { title: "Sister Location", url: "https://alrmax1290-droid.github.io/fnafsl/" },
+  pizzeriasim: { title: "Pizzeria Simulator", url: "https://alrmax1290-droid.github.io/fnafps/" },
+  ucn: { title: "Ultimate Custom Night", url: "https://alrmax1290-droid.github.io/fnafucn/" },
+  fnafworld: { title: "FNAF World", url: "https://alrmax1290-droid.github.io/fnafworld/" },
+  shrekhotel: { title: "Five Nights at Shrek's Hotel", url: "https://alrmax1290-droid.github.io/fnas/" },
+  candys1: { title: "Five Nights at Candy's 1", url: "https://alrmax1290-droid.github.io/fnac/" },
+  candys2: { title: "Five Nights at Candy's 2", url: "https://alrmax1290-droid.github.io/fnac2/" },
+  brawlsimulator: { title: "Brawl Simulator", url: "https://alrmax1290-droid.github.io/brawlsimulator/" },
+  survivorio: { title: "Survivor IO", url: "https://alrmax1290-droid.github.io/SURVIVORIO/" },
+  plinko: { title: "Plinko", url: "https://alrmax1290-droid.github.io/PLINKO/" },
+  ironlung: { title: "Iron Lung", url: "https://alrmax1290-droid.github.io/IRONGLOUNG/" },
+  cloverpit: { title: "Clover Pit", url: "https://alrmax1290-droid.github.io/CLOVERPIT/" },
+  fivenightsatepsteins: { title: "Five Nights at Epstein's", url: "https://alrmax1290-droid.github.io/Five-Nights-at-Epsteins/" },
+  bartblast: { title: "Bart Blast", url: "https://alrmax1290-droid.github.io/BARTBLAST/" },
+  fused: { title: "Fused", url: "https://alrmax1290-droid.github.io/Fused/" },
+  christmasmassacre: { title: "Christmas Massacre", url: "https://alrmax1290-droid.github.io/ChristmasMassacre/" }
 };
 
 const gameFrame = document.getElementById("gameFrame");

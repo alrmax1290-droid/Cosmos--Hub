@@ -11,18 +11,62 @@ html, body {
   height: 100%;
   font-family: Arial, sans-serif;
   color: white;
+  overflow: hidden;
   background:
-    radial-gradient(circle at top, rgba(113, 55, 255, 0.28) 0%, rgba(40, 20, 80, 0.12) 18%, transparent 36%),
-    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.10) 0 1px, transparent 1px),
-    radial-gradient(circle at 75% 30%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
-    radial-gradient(circle at 35% 75%, rgba(255,255,255,0.06) 0 1px, transparent 1px),
-    radial-gradient(circle at top, #141414 0%, #070711 45%, #000 100%);
-  background-size: auto, 180px 180px, 240px 240px, 300px 300px, auto;
+    radial-gradient(circle at top, rgba(88, 63, 188, 0.35) 0%, rgba(25, 18, 60, 0.18) 20%, transparent 38%),
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.10) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.06) 0 1px, transparent 1px),
+    linear-gradient(180deg, #050816 0%, #03030a 100%);
+  background-size: auto, 180px 180px, 260px 260px, 320px 320px, auto;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.stars,
+.stars2,
+.stars3 {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.stars {
+  background:
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent);
+  background-repeat: repeat;
+  background-size: 220px 220px;
+  animation: moveStars 100s linear infinite;
+  opacity: 0.6;
+}
+
+.stars2 {
+  background:
+    radial-gradient(1.5px 1.5px at 50px 50px, rgba(130,180,255,0.8), transparent),
+    radial-gradient(2px 2px at 100px 150px, rgba(255,255,255,0.7), transparent);
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  animation: moveStars 160s linear infinite;
+  opacity: 0.38;
+}
+
+.stars3 {
+  background:
+    radial-gradient(2px 2px at 80px 20px, rgba(170,140,255,0.7), transparent);
+  background-repeat: repeat;
+  background-size: 360px 360px;
+  animation: moveStars 220s linear infinite;
+  opacity: 0.28;
+}
+
+@keyframes moveStars {
+  from { transform: translateY(0); }
+  to { transform: translateY(-220px); }
 }
 
 .wrapper {
@@ -36,18 +80,19 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 16px 28px;
-  background: rgba(0, 0, 0, 0.88);
-  border-bottom: 1px solid rgba(255,176,64,0.18);
+  background: rgba(6, 10, 24, 0.72);
+  border-bottom: 1px solid rgba(120, 170, 255, 0.16);
+  backdrop-filter: blur(14px);
   position: sticky;
   top: 0;
   z-index: 1000;
-  backdrop-filter: blur(10px);
 }
 
 .logo {
   font-size: 24px;
   font-weight: bold;
-  color: #ffb040;
+  color: #c9d7ff;
+  text-shadow: 0 0 12px rgba(120,180,255,0.35);
 }
 
 .nav-links {
@@ -56,9 +101,14 @@ a {
   flex-wrap: wrap;
 }
 
+.nav-links a {
+  color: #cfd8f6;
+}
+
 .nav-links a:hover,
 .nav-links a.active {
-  color: #ffb040;
+  color: #7fdcff;
+  text-shadow: 0 0 10px rgba(127,220,255,0.45);
 }
 
 .topbar {
@@ -66,17 +116,19 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 14px 20px;
-  background: rgba(10,10,18,0.92);
-  border-bottom: 1px solid #222;
+  background: rgba(9, 14, 31, 0.72);
+  border-bottom: 1px solid rgba(122, 188, 255, 0.12);
+  backdrop-filter: blur(14px);
 }
 
 .topbar-title {
   font-size: 18px;
   font-weight: bold;
+  color: #eef3ff;
 }
 
 .back-link {
-  color: #ffb040;
+  color: #7fdcff;
   font-weight: bold;
 }
 
@@ -89,16 +141,19 @@ iframe {
   width: 100%;
   height: 100%;
   border: none;
-  border-radius: 16px;
+  border-radius: 18px;
   background: #000;
-  box-shadow: 0 0 20px rgba(120, 80, 255, 0.08);
+  box-shadow: 0 0 24px rgba(90,120,255,0.12);
 }
 </style>
 </head>
 
 <body>
-<div class="wrapper">
+<div class="stars"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
 
+<div class="wrapper">
   <div class="nav">
     <div class="logo">Cosmos Hub</div>
     <div class="nav-links">
@@ -117,7 +172,6 @@ iframe {
   <div class="frame-wrap">
     <iframe src="https://tellurideeducationassociation.org/page/media/index.html"></iframe>
   </div>
-
 </div>
 </body>
 </html>

@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Music - Cosmos Hub</title>
 
 <style>
@@ -12,40 +11,56 @@ font-family:Arial;
 background:#03030a;
 color:white;
 display:flex;
-flex-direction:column;
+justify-content:center;
+align-items:center;
 height:100vh;
+text-align:center;
 overflow:hidden;
 }
 
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:14px 20px;
-background:#0b0b0b;
-border-bottom:1px solid #222;
+/* box */
+.box{
+background:#111;
+padding:40px;
+border-radius:16px;
+border:1px solid rgba(127,220,255,.25);
+box-shadow:0 0 25px rgba(90,150,255,.15);
 }
 
-.topbar a{
+/* button */
+button{
+margin-top:20px;
+padding:14px 22px;
+border:none;
+border-radius:12px;
+background:linear-gradient(135deg,#6d5dfc,#3ecbff);
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:.25s;
+}
+
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 0 20px rgba(90,150,255,.25);
+}
+
+a{
+display:block;
+margin-top:15px;
 color:#7fdcff;
 text-decoration:none;
-font-weight:bold;
-}
-
-iframe{
-flex:1;
-border:none;
-width:100%;
 }
 
 /* loading */
 .loading{
 position:fixed;
 inset:0;
+background:#03030a;
 display:flex;
+flex-direction:column;
 align-items:center;
 justify-content:center;
-background:#03030a;
 z-index:9999;
 }
 
@@ -67,25 +82,43 @@ to{transform:rotate(360deg)}
 <body>
 
 <div class="loading" id="loader">
+<div style="font-size:24px;margin-bottom:10px;">Launching Music...</div>
 <div class="spinner"></div>
 </div>
 
-<div class="topbar">
-<div>🎵 Music</div>
+<div class="box">
+<h1>🎵 Music</h1>
+<p>Launch the music player</p>
+
+<button onclick="launchMusic()">Launch Music</button>
+
 <a href="index.html">← Home</a>
 </div>
 
-<iframe id="frame" src="https://axiseducation.one"></iframe>
-
 <script>
-const frame = document.getElementById("frame");
-const loader = document.getElementById("loader");
+function launchMusic(){
 
-frame.onload = () => {
-loader.style.display = "none";
-};
+const win = window.open("about:blank","_blank");
 
-setTimeout(()=>loader.style.display="none",4000);
+win.document.write(`
+<html>
+<head>
+<title>Music</title>
+<style>
+body{margin:0;background:black;}
+iframe{width:100vw;height:100vh;border:none;}
+</style>
+</head>
+<body>
+
+<iframe src="https://mono.geeked.wtf/"></iframe>
+
+</body>
+</html>
+`);
+
+document.getElementById("loader").style.display="none";
+}
 </script>
 
 </body>

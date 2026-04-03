@@ -34,13 +34,6 @@ color:white;
 font-weight:bold;
 cursor:pointer;
 }
-
-a{
-display:block;
-margin-top:15px;
-color:#7fdcff;
-text-decoration:none;
-}
 </style>
 </head>
 
@@ -48,16 +41,15 @@ text-decoration:none;
 
 <div class="box">
 <h1>🎵 Music</h1>
-<p>Launch the music player</p>
+<p>Launch music through proxy</p>
 
 <button onclick="launchMusic()">Launch Music</button>
 
-<a href="index.html">← Home</a>
 </div>
 
 <script>
 function launchMusic(){
-window.open("https://mono.geeked.wtf/", "_blank");
+window.location.href = "https://axiseducation.one";
 }
 </script>
 

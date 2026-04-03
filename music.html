@@ -17,13 +17,11 @@ height:100vh;
 text-align:center;
 }
 
-/* box */
 .box{
 background:#111;
 padding:40px;
 border-radius:16px;
 border:1px solid rgba(127,220,255,.25);
-box-shadow:0 0 25px rgba(90,150,255,.15);
 }
 
 button{
@@ -35,11 +33,6 @@ background:linear-gradient(135deg,#6d5dfc,#3ecbff);
 color:white;
 font-weight:bold;
 cursor:pointer;
-transition:.25s;
-}
-
-button:hover{
-transform:translateY(-2px);
 }
 
 a{
@@ -64,24 +57,7 @@ text-decoration:none;
 
 <script>
 function launchMusic(){
-
-const win = window.open("about:blank","_blank");
-
-win.document.write(`
-<html>
-<head>
-<title>Music</title>
-<style>
-body{margin:0;background:black;}
-iframe{width:100vw;height:100vh;border:none;}
-</style>
-</head>
-<body>
-<iframe src="https://mono.geeked.wtf/"></iframe>
-</body>
-</html>
-`);
-
+window.open("https://mono.geeked.wtf/", "_blank");
 }
 </script>
 

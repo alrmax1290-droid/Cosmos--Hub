@@ -1,82 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Loading...</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Games</title>
 
 <style>
 html, body {
-margin:0;
-width:100%;
-height:100%;
-background:#03030a;
-color:white;
-font-family:Arial,sans-serif;
-overflow:hidden;
+  margin:0;
+  width:100%;
+  height:100%;
+  background:#03030a;
+  overflow:hidden;
+  font-family:Arial;
 }
 
 .loader {
-width:100%;
-height:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-gap:14px;
-text-align:center;
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:12px;
+  color:white;
+  z-index:10;
 }
 
 .spinner {
-width:44px;
-height:44px;
-border:4px solid rgba(255,255,255,0.15);
-border-top-color:#7fdcff;
-border-radius:50%;
-animation:spin 0.9s linear infinite;
+  width:44px;
+  height:44px;
+  border:4px solid rgba(255,255,255,.15);
+  border-top-color:#7fdcff;
+  border-radius:50%;
+  animation:spin .9s linear infinite;
+}
+
+iframe {
+  width:100%;
+  height:100%;
+  border:none;
 }
 
 @keyframes spin {
-to { transform:rotate(360deg); }
+  to { transform:rotate(360deg); }
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="loader" id="loader">
-<div class="spinner"></div>
-<div>Loading Games...</div>
+  <div class="spinner"></div>
+  <div>Loading Games...</div>
 </div>
 
+<iframe id="frame"
+src="https://cdn.jsdelivr.net/gh/gn-math/gn-math-DONTDMCA@main/singlefile.html"
+sandbox="allow-scripts allow-same-origin allow-forms allow-popups">
+</iframe>
+
 <script>
-(async () => {
+const frame = document.getElementById("frame");
+const loader = document.getElementById("loader");
 
-const RAW_URL = "https://cdn.jsdelivr.net/gh/gn-math/gn-math-DONTDMCA@main/singlefile.html";
+frame.onload = () => {
+  loader.style.display = "none";
+};
 
-try {
-  const response = await fetch(RAW_URL + "?t=" + Date.now(), { cache: "no-store" });
-  if (!response.ok) throw new Error("HTTP " + response.status);
-
-  let html = await response.text();
-
-  // 🔥 OPTIONAL: remove red colors
-  html = html
-    .replace(/#ff0000/gi, "#03030a")
-    .replace(/red/gi, "#03030a")
-    .replace(/color:\s*white/gi, "color:#7fdcff");
-
-  document.open();
-  document.write(html);
-  document.close();
-
-} catch (err) {
-  document.getElementById("loader").innerHTML =
-    `<div style="color:#ff8a8a;">Failed to load<br><br>${err}</div>`;
-}
-
-})();
+// fallback hide
+setTimeout(()=>loader.style.display="none",5000);
 </script>
 
 </body>

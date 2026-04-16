@@ -2,48 +2,65 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Games</title>
+<title>Games - Cosmos Hub</title>
 
 <style>
-html, body {
-  margin:0;
-  width:100%;
-  height:100%;
-  background:#03030a;
-  overflow:hidden;
-  font-family:Arial;
+body{
+margin:0;
+background:#03030a;
+color:white;
+font-family:Arial;
+display:flex;
+flex-direction:column;
+height:100vh;
+overflow:hidden;
 }
 
-.loader {
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  gap:12px;
-  color:white;
-  z-index:10;
+.topbar{
+padding:12px 18px;
+background:#0b0b0b;
+border-bottom:1px solid #222;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-.spinner {
-  width:44px;
-  height:44px;
-  border:4px solid rgba(255,255,255,.15);
-  border-top-color:#7fdcff;
-  border-radius:50%;
-  animation:spin .9s linear infinite;
+.topbar a{
+color:#7fdcff;
+text-decoration:none;
+font-weight:bold;
 }
 
-iframe {
-  width:100%;
-  height:100%;
-  border:none;
+iframe{
+flex:1;
+width:100%;
+border:none;
+background:#03030a;
 }
 
-@keyframes spin {
-  to { transform:rotate(360deg); }
+/* loader */
+.loader{
+position:fixed;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+background:#03030a;
+z-index:9999;
+}
+
+.spinner{
+width:50px;
+height:50px;
+border-radius:50%;
+border:4px solid rgba(255,255,255,.1);
+border-top-color:#7fdcff;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+to{transform:rotate(360deg)}
 }
 </style>
 </head>
@@ -51,14 +68,17 @@ iframe {
 <body>
 
 <div class="loader" id="loader">
-  <div class="spinner"></div>
-  <div>Loading Games...</div>
+<div class="spinner"></div>
+<div style="margin-top:10px;">Loading Games...</div>
 </div>
 
-<iframe id="frame"
-src="https://cdn.jsdelivr.net/gh/gn-math/gn-math-DONTDMCA@main/singlefile.html"
-sandbox="allow-scripts allow-same-origin allow-forms allow-popups">
-</iframe>
+<div class="topbar">
+<div>🎮 Games</div>
+<a href="index.html">← Home</a>
+</div>
+
+<!-- ✅ YOUR LOCAL FILE -->
+<iframe id="frame" src="index.html"></iframe>
 
 <script>
 const frame = document.getElementById("frame");
@@ -68,7 +88,7 @@ frame.onload = () => {
   loader.style.display = "none";
 };
 
-// fallback hide
+// fallback (in case onload doesn't fire)
 setTimeout(()=>loader.style.display="none",5000);
 </script>
 

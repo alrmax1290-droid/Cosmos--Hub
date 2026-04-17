@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cosmos Hub</title>
 
   <style>
@@ -74,8 +74,12 @@
     }
 
     @keyframes moveStars {
-      from { transform: translateY(0); }
-      to { transform: translateY(-220px); }
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(-220px);
+      }
     }
 
     .nav {
@@ -272,16 +276,24 @@
     }
 
     @keyframes floatPlanet {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
     }
 
     @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.05); opacity: 1; }
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.9;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 1;
+      }
     }
-
-    /* (rest of your CSS stays the same — unchanged for brevity) */
   </style>
 </head>
 
@@ -337,7 +349,94 @@
     </div>
   </section>
 
-  <!-- (rest of your HTML unchanged) -->
+  <div class="section">
+    <div class="panel">
+      <div class="quick-links">
+        <a href="my-games.html" class="quick-card">
+          <h3>🎮 Games</h3>
+          <p>Browse your library, use search and filters, and launch games from one place.</p>
+        </a>
 
+        <a href="movies.html" class="quick-card">
+          <h3>🎬 Movies</h3>
+          <p>Open your movie section.</p>
+        </a>
+
+        <a href="music.html" class="quick-card">
+          <h3>🎵 Music</h3>
+          <p>Jump into your music</p>
+        </a>
+      </div>
+
+      <div class="section-title-row">
+        <div class="section-title">Popular Games</div>
+        <div class="section-subtext">Quick launch your favorites</div>
+      </div>
+
+      <div class="games-grid">
+        <a href="play.html?game=geometrydash" class="card">
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322170/capsule_616x353.jpg?t=1703006148" alt="Geometry Dash">
+          <div class="card-content">
+            <div class="card-title">Geometry Dash</div>
+            <div class="card-desc">Featured rhythm platformer.</div>
+            <div class="card-badge">Featured</div>
+          </div>
+        </a>
+
+        <a href="play.html?game=ovo" class="card">
+          <img src="https://www.coolmathgames.com/sites/default/files/OvO_OG-logo.jpg" alt="OVO">
+          <div class="card-content">
+            <div class="card-title">OVO</div>
+            <div class="card-desc">Fast parkour platform action.</div>
+            <div class="card-badge">Arcade</div>
+          </div>
+        </a>
+
+        <a href="play.html?game=retrobowl" class="card">
+          <img src="https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/store/software/switch/70010000048336/e3c1297d2ec30fe72a657af60c416d10c68a784bc874cf28e19cdf9261956919" alt="Retro Bowl">
+          <div class="card-content">
+            <div class="card-title">Retro Bowl</div>
+            <div class="card-desc">Classic football manager vibes.</div>
+            <div class="card-badge">Sports</div>
+          </div>
+        </a>
+
+        <a href="play.html?game=fnaf1" class="card">
+          <img src="https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/covers@main/38.png" alt="FNAF 1">
+          <div class="card-content">
+            <div class="card-title">FNAF 1</div>
+            <div class="card-desc">A popular horror pick.</div>
+            <div class="card-badge">Horror</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="info-strip">
+        <div class="info-box">
+          <div class="info-box-number">25+</div>
+          <div class="info-box-label">Games Available</div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-number">3</div>
+          <div class="info-box-label">Main Sections</div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-number">1</div>
+          <div class="info-box-label">Site</div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-number">24/7</div>
+          <div class="info-box-label">Always Ready</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2026 Cosmos Hub
+  </div>
 </body>
 </html>

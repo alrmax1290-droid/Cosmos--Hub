@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Games - Cosmos Hub</title>
-
 <style>
 body{
 margin:0;
@@ -15,7 +14,6 @@ flex-direction:column;
 height:100vh;
 overflow:hidden;
 }
-
 .topbar{
 padding:12px 18px;
 background:#0b0b0b;
@@ -24,21 +22,17 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 }
-
 .topbar a{
 color:#7fdcff;
 text-decoration:none;
 font-weight:bold;
 }
-
 iframe{
 flex:1;
 width:100%;
 border:none;
 background:#03030a;
 }
-
-/* loader */
 .loader{
 position:fixed;
 inset:0;
@@ -49,7 +43,6 @@ flex-direction:column;
 background:#03030a;
 z-index:9999;
 }
-
 .spinner{
 width:50px;
 height:50px;
@@ -58,39 +51,28 @@ border:4px solid rgba(255,255,255,.1);
 border-top-color:#7fdcff;
 animation:spin 1s linear infinite;
 }
-
 @keyframes spin{
 to{transform:rotate(360deg)}
 }
 </style>
 </head>
-
 <body>
-
 <div class="loader" id="loader">
 <div class="spinner"></div>
 <div style="margin-top:10px;">Loading Games...</div>
 </div>
-
 <div class="topbar">
 <div>🎮 Games</div>
 <a href="index.html">← Home</a>
 </div>
-
-<!-- ✅ YOUR LOCAL FILE -->
-<iframe id="frame" src="singlefile.html"></iframe>
-
+<iframe id="frame" src="singlefile.html" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
 <script>
 const frame = document.getElementById("frame");
 const loader = document.getElementById("loader");
-
 frame.onload = () => {
   loader.style.display = "none";
 };
-
-// fallback (in case onload doesn't fire)
 setTimeout(()=>loader.style.display="none",5000);
 </script>
-
 </body>
 </html>

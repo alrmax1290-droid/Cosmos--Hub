@@ -418,6 +418,15 @@ iframe {
   frame.addEventListener("load", hideLoader);
   setTimeout(hideLoader, 4000);
 
+  // Save to recently played
+  try {
+    let recent = JSON.parse(localStorage.getItem('cosmos_recent') || '[]');
+    recent = recent.filter(k => k !== gameKey);
+    recent.unshift(gameKey);
+    recent = recent.slice(0, 5);
+    localStorage.setItem('cosmos_recent', JSON.stringify(recent));
+  } catch(e) {}
+
   fullscreenBtn.addEventListener("click", function () {
     if (document.fullscreenElement) {
       document.exitFullscreen();

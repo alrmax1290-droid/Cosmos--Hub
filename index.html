@@ -769,6 +769,7 @@ footer {
     <a href="my-games.html">Games</a>
     <a href="movies.html">Movies</a>
     <a href="music.html">Music</a>
+    <a href="chat.html">Chat</a>
   </div>
 </nav>
 
@@ -809,6 +810,7 @@ footer {
     <div class="hero-ctas">
       <a href="my-games.html" class="btn-primary">🎮 Browse Games</a>
       <a href="movies.html" class="btn-ghost">🎬 Watch Movies</a>
+      <button onclick="surpriseMe()" class="btn-ghost" style="cursor:pointer;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:#8a85a8;font-family:'Outfit',sans-serif;">🎲 Surprise Me</button>
     </div>
     <div class="hero-pills">
       <div class="pill">⚡ 25+ Games</div>
@@ -972,6 +974,14 @@ footer {
 </div>
 
 <footer>© 2026 Cosmos Hub — Your Universe Awaits</footer>
+
+<script>
+function surpriseMe() {
+  const games = ["geometrydash","ovo","retrobowl","brotato","baldi","fnaf1","fnaf2","fnaf3","fnaf4","sisterlocation","pizzeriasim","ucn","fnafworld","shrekhotel","candys1","candys2","brawlsimulator","survivorio","plinko","ironlung","cloverpit","fivenightsatepsteins","bartblast","fused","christmasmassacre","cellmachine"];
+  const pick = games[Math.floor(Math.random() * games.length)];
+  window.location.href = "play.html?game=" + pick;
+}
+</script>
 
 </body>
 </html>

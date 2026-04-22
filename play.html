@@ -438,6 +438,15 @@ iframe {
     }
   });
 
+  // F key = fullscreen
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "f" || e.key === "F") {
+      if (document.activeElement.tagName !== "INPUT") {
+        fullscreenBtn.click();
+      }
+    }
+  });
+
   blankBtn.addEventListener("click", function () {
     const newWin = window.open("about:blank", "_blank");
     if (!newWin) return;

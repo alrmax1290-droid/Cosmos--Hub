@@ -23,13 +23,19 @@
   --glow-cyan: rgba(0,229,255,0.25);
 }
 
-body.light {
-  --bg: #f0eeff;
-  --surface: rgba(0,0,0,0.04);
-  --surface2: rgba(0,0,0,0.07);
-  --border: rgba(0,0,0,0.10);
-  --text: #12101f;
-  --muted: #6b6480;
+body.alt-theme {
+  --bg: #0a0500;
+  --surface: rgba(255,120,0,0.05);
+  --surface2: rgba(255,120,0,0.09);
+  --border: rgba(255,120,0,0.12);
+  --accent: #ff6a00;
+  --accent2: #ff3d00;
+  --accent3: #ffb700;
+  --text: #fff5e0;
+  --muted: #a08060;
+  --glow-pink: rgba(255,106,0,0.4);
+  --glow-purple: rgba(255,61,0,0.4);
+  --glow-cyan: rgba(255,183,0,0.3);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -539,7 +545,35 @@ nav {
 .stat-num { font-family: 'Rajdhani', sans-serif; font-size: 40px; font-weight: 700; background: linear-gradient(135deg, #fff, var(--accent3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 6px; }
 .stat-label { font-size: 13px; color: var(--muted); font-weight: 600; }
 
+/* EXPLOSION */
+.explosion-overlay {
+  position: fixed; inset: 0; z-index: 9998; pointer-events: none; display: none;
+}
+.explosion-ring {
+  position: absolute; border-radius: 50%; border: 3px solid var(--accent);
+  transform: translate(-50%, -50%) scale(0);
+  animation: ringExpand 0.8s ease-out forwards;
+}
+@keyframes ringExpand {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(8); opacity: 0; }
+}
+.explosion-particle {
+  position: absolute; width: 8px; height: 8px; border-radius: 50%;
+  animation: particleFly linear forwards;
+}
+@keyframes particleFly {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: var(--tx) scale(0); opacity: 0; }
+}
+.screen-flash {
+  position: fixed; inset: 0; z-index: 9997; pointer-events: none;
+  background: white; opacity: 0; transition: opacity 0.1s;
+}
+.screen-flash.flash { opacity: 0.6; }
+
 footer { position: relative; z-index: 1; text-align: center; padding: 30px 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+
 
 /* EASTER EGG */
 .easter-egg-overlay {
@@ -615,6 +649,8 @@ footer { position: relative; z-index: 1; text-align: center; padding: 30px 20px;
 <div class="grid-bg"></div>
 <div class="easter-egg-overlay" id="easterEggOverlay"></div>
 <div class="easter-toast" id="easterToast">🌌 You found the Cosmos secret!</div>
+<div class="explosion-overlay" id="explosionOverlay"></div>
+<div class="screen-flash" id="screenFlash"></div>
 
 <nav>
   <div class="nav-logo">COSMOS HUB</div>
@@ -910,17 +946,83 @@ function surpriseMe() {
   window.location.href = `play.html?game=${pick.key}`;
 }
 
-// ── DARK/LIGHT TOGGLE ──
+// ── THEME TOGGLE WITH EXPLOSION ──
 const themeBtn = document.getElementById('themeBtn');
 const savedTheme = localStorage.getItem('cosmos_theme') || 'dark';
-if (savedTheme === 'light') { document.body.classList.add('light'); themeBtn.textContent = '☀️'; }
+if (savedTheme === 'alt') { document.body.classList.add('alt-theme'); themeBtn.textContent = '🔥'; }
 
 themeBtn.addEventListener('click', () => {
-  document.body.classList.toggle('light');
-  const isLight = document.body.classList.contains('light');
-  themeBtn.textContent = isLight ? '☀️' : '🌙';
-  localStorage.setItem('cosmos_theme', isLight ? 'light' : 'dark');
+  triggerExplosion(() => {
+    document.body.classList.toggle('alt-theme');
+    const isAlt = document.body.classList.contains('alt-theme');
+    themeBtn.textContent = isAlt ? '🔥' : '🌙';
+    localStorage.setItem('cosmos_theme', isAlt ? 'alt' : 'dark');
+  });
 });
+
+function triggerExplosion(callback) {
+  const overlay = document.getElementById('explosionOverlay');
+  const flash = document.getElementById('screenFlash');
+  overlay.style.display = 'block';
+  overlay.innerHTML = '';
+
+  // Get planet position
+  const orb = document.querySelector('.hub-orb-core');
+  let cx = window.innerWidth / 2;
+  let cy = window.innerHeight / 2;
+  if (orb) {
+    const rect = orb.getBoundingClientRect();
+    cx = rect.left + rect.width / 2;
+    cy = rect.top + rect.height / 2;
+  }
+
+  // Rings
+  const colors = ['#ff6a00','#ff3d00','#ffb700','#ff3d7f','#7b5fff','#00e5ff'];
+  for (let i = 0; i < 3; i++) {
+    const ring = document.createElement('div');
+    ring.className = 'explosion-ring';
+    ring.style.left = cx + 'px';
+    ring.style.top = cy + 'px';
+    ring.style.width = '80px';
+    ring.style.height = '80px';
+    ring.style.borderColor = colors[i % colors.length];
+    ring.style.animationDelay = (i * 0.15) + 's';
+    overlay.appendChild(ring);
+  }
+
+  // Particles
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement('div');
+    p.className = 'explosion-particle';
+    const angle = (i / 40) * Math.PI * 2;
+    const dist = 150 + Math.random() * 250;
+    const tx = `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px)`;
+    p.style.left = cx + 'px';
+    p.style.top = cy + 'px';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.setProperty('--tx', tx);
+    p.style.width = (4 + Math.random() * 8) + 'px';
+    p.style.height = p.style.width;
+    p.style.animationDuration = (0.6 + Math.random() * 0.6) + 's';
+    p.style.animationDelay = Math.random() * 0.2 + 's';
+    overlay.appendChild(p);
+  }
+
+  // Flash
+  flash.classList.add('flash');
+  setTimeout(() => flash.classList.remove('flash'), 150);
+
+  // Switch theme after explosion peak
+  setTimeout(() => {
+    callback();
+  }, 400);
+
+  // Cleanup
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    overlay.innerHTML = '';
+  }, 1200);
+}
 
 // ── EASTER EGG ──
 let easterBuffer = '';

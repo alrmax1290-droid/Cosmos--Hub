@@ -572,6 +572,83 @@ nav {
 }
 .screen-flash.flash { opacity: 0.6; }
 
+/* ── INTRO SCREEN ── */
+#introScreen {
+  position: fixed; inset: 0; z-index: 99999;
+  background: #070510;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+  transition: opacity 0.6s ease;
+}
+#introScreen.fade-out { opacity: 0; pointer-events: none; }
+
+.intro-logo {
+  font-family: 'Rajdhani', sans-serif; font-size: 52px; font-weight: 700; letter-spacing: 4px;
+  background: linear-gradient(135deg, #fff, var(--accent3));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: introLogoIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  opacity: 0; transform: scale(0.8);
+}
+@keyframes introLogoIn { to { opacity: 1; transform: scale(1); } }
+
+.intro-orb {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent2), var(--accent));
+  box-shadow: 0 0 60px rgba(123,95,255,0.5);
+  animation: introOrbPulse 1s ease-in-out infinite, introOrbIn 0.4s ease forwards;
+  opacity: 0;
+}
+@keyframes introOrbIn { to { opacity: 1; } }
+@keyframes introOrbPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+.intro-bar-wrap { width: 200px; height: 3px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
+.intro-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent2), var(--accent3)); border-radius: 999px; animation: introBarFill 1.2s ease-out 0.3s forwards; }
+@keyframes introBarFill { to { width: 100%; } }
+
+.intro-sub { font-size: 13px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; opacity: 0; animation: introFadeIn 0.5s ease 0.5s forwards; }
+@keyframes introFadeIn { to { opacity: 1; } }
+
+/* ── CUSTOM CURSOR ── */
+.cursor-dot {
+  position: fixed; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--accent3); pointer-events: none; z-index: 99998;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px var(--accent3), 0 0 20px rgba(0,229,255,0.3);
+  transition: width 0.15s, height 0.15s, background 0.15s;
+}
+.cursor-ring {
+  position: fixed; width: 30px; height: 30px; border-radius: 50%;
+  border: 1.5px solid rgba(0,229,255,0.4); pointer-events: none; z-index: 99997;
+  transform: translate(-50%, -50%); transition: all 0.12s ease;
+}
+.cursor-trail {
+  position: fixed; border-radius: 50%; pointer-events: none; z-index: 99996;
+  transform: translate(-50%, -50%); animation: trailFade 0.6s ease forwards;
+}
+@keyframes trailFade { 0% { opacity: 0.8; transform: translate(-50%,-50%) scale(1); } 100% { opacity: 0; transform: translate(-50%,-50%) scale(0.1); } }
+
+/* ── SPACE PARTICLES ── */
+.space-particle {
+  position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+  animation: spaceDrift linear infinite;
+  opacity: 0;
+}
+@keyframes spaceDrift {
+  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-20px) translateX(var(--drift)); opacity: 0; }
+}
+
+/* ── VISITOR COUNTER ── */
+.visitor-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 14px; border-radius: 999px;
+  border: 1px solid rgba(0,229,255,0.15); background: rgba(0,229,255,0.05);
+  font-size: 13px; font-weight: 600; color: var(--muted);
+}
+.visitor-pill .vcount { color: var(--accent3); font-weight: 700; }
+.visitor-pill::before { content: '👥'; font-size: 14px; }
+
 footer { position: relative; z-index: 1; text-align: center; padding: 30px 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
 
 
@@ -643,6 +720,18 @@ footer { position: relative; z-index: 1; text-align: center; padding: 30px 20px;
 </head>
 <body>
 
+<!-- INTRO SCREEN -->
+<div id="introScreen">
+  <div class="intro-orb"></div>
+  <div class="intro-logo">COSMOS HUB</div>
+  <div class="intro-bar-wrap"><div class="intro-bar"></div></div>
+  <div class="intro-sub">Your Universe Awaits</div>
+</div>
+
+<!-- CURSOR -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
 <div class="orb orb3"></div>
@@ -704,6 +793,7 @@ footer { position: relative; z-index: 1; text-align: center; padding: 30px 20px;
       <div class="pill">🎬 Movies</div>
       <div class="pill">🎵 Music</div>
       <div class="pill">🔓 Always Unlocked</div>
+      <div class="visitor-pill">Visitors: <span class="vcount" id="visitorCount">...</span></div>
     </div>
   </div>
 
@@ -902,7 +992,125 @@ const GAMES = [
   { key: "cellmachine", title: "Cell Machine", desc: "Build and simulate cellular automata.", emoji: "🔬" }
 ];
 
-// ── GAME OF THE DAY ──
+// ── INTRO SCREEN ──
+const introScreen = document.getElementById('introScreen');
+const hasVisited = sessionStorage.getItem('cosmos_visited');
+if (hasVisited) {
+  introScreen.style.display = 'none';
+} else {
+  sessionStorage.setItem('cosmos_visited', '1');
+  setTimeout(() => {
+    introScreen.classList.add('fade-out');
+    setTimeout(() => introScreen.style.display = 'none', 600);
+  }, 1800);
+}
+
+// ── CUSTOM CURSOR ──
+const cursorDot = document.getElementById('cursorDot');
+const cursorRing = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0;
+let ringX = 0, ringY = 0;
+let lastTrail = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursorDot.style.left = mouseX + 'px';
+  cursorDot.style.top = mouseY + 'px';
+
+  // Trail particles
+  const now = Date.now();
+  if (now - lastTrail > 40) {
+    lastTrail = now;
+    const trail = document.createElement('div');
+    trail.className = 'cursor-trail';
+    const size = Math.random() * 6 + 3;
+    trail.style.left = mouseX + 'px';
+    trail.style.top = mouseY + 'px';
+    trail.style.width = size + 'px';
+    trail.style.height = size + 'px';
+    const colors = ['#00e5ff','#7b5fff','#ff3d7f'];
+    trail.style.background = colors[Math.floor(Math.random() * colors.length)];
+    trail.style.animationDuration = (Math.random() * 0.3 + 0.4) + 's';
+    document.body.appendChild(trail);
+    setTimeout(() => trail.remove(), 700);
+  }
+});
+
+// Smooth ring follow
+function animateCursor() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  cursorRing.style.left = ringX + 'px';
+  cursorRing.style.top = ringY + 'px';
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+
+// Cursor effects on hover
+document.addEventListener('mouseover', (e) => {
+  if (e.target.closest('a, button, .game-card, .hub-card, .filter-btn')) {
+    cursorDot.style.width = '16px';
+    cursorDot.style.height = '16px';
+    cursorDot.style.background = '#ff3d7f';
+    cursorRing.style.width = '44px';
+    cursorRing.style.height = '44px';
+    cursorRing.style.borderColor = 'rgba(255,61,127,0.5)';
+  }
+});
+document.addEventListener('mouseout', (e) => {
+  if (e.target.closest('a, button, .game-card, .hub-card, .filter-btn')) {
+    cursorDot.style.width = '10px';
+    cursorDot.style.height = '10px';
+    cursorDot.style.background = 'var(--accent3)';
+    cursorRing.style.width = '30px';
+    cursorRing.style.height = '30px';
+    cursorRing.style.borderColor = 'rgba(0,229,255,0.4)';
+  }
+});
+
+// ── SPACE PARTICLES ──
+function createSpaceParticles() {
+  const colors = ['rgba(123,95,255,0.6)','rgba(0,229,255,0.5)','rgba(255,61,127,0.4)','rgba(255,255,255,0.5)'];
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'space-particle';
+    const size = Math.random() * 3 + 1;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.bottom = '-10px';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
+    p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+    p.style.animationDelay = (Math.random() * 15) + 's';
+    document.body.appendChild(p);
+  }
+}
+createSpaceParticles();
+
+// ── VISITOR COUNTER ──
+async function loadVisitorCount() {
+  try {
+    const res = await fetch('https://api.counterapi.dev/v1/cosmos-hub-alrmax/visits/up');
+    const data = await res.json();
+    const el = document.getElementById('visitorCount');
+    if (el && data.count) {
+      let current = 0;
+      const target = data.count;
+      const step = Math.max(1, Math.ceil(target / 40));
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = current.toLocaleString();
+        if (current >= target) clearInterval(timer);
+      }, 30);
+    }
+  } catch(e) {
+    const el = document.getElementById('visitorCount');
+    if (el) el.textContent = '—';
+  }
+}
+loadVisitorCount();
+
 function getGameOfTheDay() {
   const dayIndex = Math.floor(Date.now() / 86400000) % GAMES.length;
   return GAMES[dayIndex];

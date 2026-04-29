@@ -35,80 +35,38 @@ body {
 a { text-decoration: none; color: inherit; }
 
 nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 32px;
-  height: 64px;
-  background: rgba(7,5,16,0.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-  z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 64px;
+  background: rgba(7,5,16,0.95); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); flex-shrink: 0; z-index: 10;
 }
 
 .nav-logo {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 2px;
+  font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 2px;
   background: linear-gradient(135deg, #fff, var(--accent3));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
 .nav-links { display: flex; gap: 4px; }
-
-.nav-links a {
-  padding: 7px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--muted);
-  transition: all 0.2s;
-}
-
+.nav-links a { padding: 7px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--muted); transition: all 0.2s; }
 .nav-links a:hover { color: #fff; background: var(--surface2); }
 .nav-links a.active { color: var(--accent3); }
 
 .topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 24px;
-  background: rgba(7,5,16,0.85);
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-  gap: 12px;
-}
-
-.topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex; align-items: center; padding: 10px 24px;
+  background: rgba(7,5,16,0.85); border-bottom: 1px solid var(--border);
+  flex-shrink: 0; gap: 10px;
 }
 
 .live-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent3);
-  box-shadow: 0 0 8px var(--accent3);
-  animation: blink 2s ease-in-out infinite;
-  flex-shrink: 0;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent3); box-shadow: 0 0 8px var(--accent3);
+  animation: blink 2s ease-in-out infinite; flex-shrink: 0;
 }
 
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-.topbar-title {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 1px;
-}
-
+.topbar-title { font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 1px; }
 .topbar-tip { font-size: 12px; color: var(--muted); }
 
 .frame-wrap { flex: 1; position: relative; overflow: hidden; }
@@ -119,7 +77,6 @@ nav {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   background: var(--bg); z-index: 5; gap: 16px; transition: opacity 0.3s;
 }
-
 .loader.hidden { opacity: 0; pointer-events: none; }
 
 .loader-orb {
@@ -127,20 +84,13 @@ nav {
   background: linear-gradient(135deg, var(--accent2), var(--accent3));
   position: relative; animation: spin 2s linear infinite;
 }
-
-.loader-orb::after {
-  content: ''; position: absolute; inset: 6px;
-  border-radius: 50%; background: var(--bg);
-}
-
+.loader-orb::after { content: ''; position: absolute; inset: 6px; border-radius: 50%; background: var(--bg); }
 @keyframes spin { to { transform: rotate(360deg); } }
-
 .loader-text { font-size: 14px; color: var(--muted); font-weight: 600; }
 
 @media (max-width: 700px) {
   nav { padding: 0 16px; }
   .nav-links a { padding: 6px 10px; font-size: 13px; }
-  .topbar { padding: 8px 16px; }
   .topbar-tip { display: none; }
 }
 </style>
@@ -158,11 +108,9 @@ nav {
 </nav>
 
 <div class="topbar">
-  <div class="topbar-left">
-    <div class="live-dot"></div>
-    <div class="topbar-title">🎬 Movies</div>
-    <div class="topbar-tip">Stream directly in your browser</div>
-  </div>
+  <div class="live-dot"></div>
+  <div class="topbar-title">🎬 Movies</div>
+  <div class="topbar-tip">Stream directly in your browser</div>
 </div>
 
 <div class="frame-wrap">
@@ -172,9 +120,9 @@ nav {
   </div>
   <iframe
     id="frame"
-    src="https://distinguished-lavender-zluokpjxg0.edgeone.app"
-    allow="autoplay; fullscreen"
-    sandbox="allow-scripts allow-same-origin allow-forms allow-popups">
+    src="https://schoolresources.thenaturenews.space/pages/watch.html"
+    allow="autoplay; fullscreen; pointer-lock"
+    allowfullscreen>
   </iframe>
 </div>
 

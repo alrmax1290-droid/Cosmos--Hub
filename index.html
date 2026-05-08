@@ -926,12 +926,21 @@ function triggerEasterEgg() {
 // VISITOR COUNT
 async function loadCount() {
   try {
-    const res = await fetch('https://hits.sh/alrmax1290-droid.github.io/Cosmos--Hub.json');
+    const res = await fetch('https://cosmos-hub.alrmax1290.workers.dev/count');
     const data = await res.json();
     const el = document.getElementById('visitorCount');
-    if (el && data.total) el.textContent = parseInt(data.total).toLocaleString();
+    if (el && data.count) {
+      let c = 0;
+      const step = Math.max(1, Math.ceil(data.count / 40));
+      const t = setInterval(() => {
+        c = Math.min(c + step, data.count);
+        el.textContent = c.toLocaleString();
+        if (c >= data.count) clearInterval(t);
+      }, 30);
+    }
   } catch(e) {
-    document.getElementById('visitorCount').textContent = '...';
+    const el = document.getElementById('visitorCount');
+    if (el) el.parentElement.style.display = 'none';
   }
 }
 loadCount();

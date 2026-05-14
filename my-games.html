@@ -2,77 +2,337 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Games - Cosmos Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Games - Luna</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
-body{
-margin:0;
-background:#03030a;
-color:white;
-font-family:Arial;
-display:flex;
-flex-direction:column;
-height:100vh;
-overflow:hidden;
+:root {
+  --bg: #070510;
+  --surface: rgba(255,255,255,0.04);
+  --surface2: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.08);
+  --accent: #ff3d7f;
+  --accent2: #7b5fff;
+  --accent3: #00e5ff;
+  --text: #f0eeff;
+  --muted: #8a85a8;
+  --glow-pink: rgba(255,61,127,0.35);
+  --glow-purple: rgba(123,95,255,0.35);
 }
-.topbar{
-padding:12px 18px;
-background:#0b0b0b;
-border-bottom:1px solid #222;
-display:flex;
-justify-content:space-between;
-align-items:center;
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
-.topbar a{
-color:#7fdcff;
-text-decoration:none;
-font-weight:bold;
+
+a { text-decoration: none; color: inherit; }
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
 }
-iframe{
-flex:1;
-width:100%;
-border:none;
-background:#03030a;
+
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  animation: orbFloat 12s ease-in-out infinite;
 }
-.loader{
-position:fixed;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-background:#03030a;
-z-index:9999;
+.orb1 { width: 500px; height: 500px; background: rgba(123,95,255,0.15); top: -150px; left: -100px; animation-duration: 14s; }
+.orb2 { width: 400px; height: 400px; background: rgba(255,61,127,0.12); bottom: -100px; right: -100px; animation-duration: 10s; animation-delay: -4s; }
+
+@keyframes orbFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
 }
-.spinner{
-width:50px;
-height:50px;
-border-radius:50%;
-border:4px solid rgba(255,255,255,.1);
-border-top-color:#7fdcff;
-animation:spin 1s linear infinite;
+
+.grid-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
 }
-@keyframes spin{
-to{transform:rotate(360deg)}
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 64px;
+  background: rgba(7,5,16,0.85); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Rajdhani', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 2px;
+  background: linear-gradient(135deg, #fff 0%, var(--accent3) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.nav-links { display: flex; gap: 4px; }
+.nav-links a { padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--muted); transition: all 0.2s; }
+.nav-links a:hover { color: #fff; background: var(--surface2); }
+.nav-links a.active { color: var(--accent3); background: var(--surface2); }
+
+.page-header {
+  position: relative; z-index: 1;
+  max-width: 1280px; margin: 0 auto; padding: 48px 40px 32px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+}
+
+.page-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.page-title { font-family: 'Rajdhani', sans-serif; font-size: 52px; font-weight: 700; color: #fff; line-height: 1; }
+.page-title span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.page-count { font-size: 14px; color: var(--muted); margin-top: 8px; font-weight: 600; }
+
+.controls {
+  position: relative; z-index: 1;
+  max-width: 1280px; margin: 0 auto; padding: 0 40px 32px;
+  display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+}
+
+.search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 380px; }
+.search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 15px; pointer-events: none; }
+
+.search-input {
+  width: 100%; padding: 11px 16px 11px 40px;
+  border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text);
+  font-size: 14px; font-family: 'Outfit', sans-serif; font-weight: 600; outline: none; transition: all 0.2s;
+}
+.search-input::placeholder { color: var(--muted); }
+.search-input:focus { border-color: rgba(123,95,255,0.5); background: var(--surface2); box-shadow: 0 0 0 3px rgba(123,95,255,0.1); }
+
+.filter-btn {
+  padding: 11px 16px; border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--muted);
+  font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Outfit', sans-serif;
+}
+.filter-btn:hover { color: #fff; background: var(--surface2); border-color: rgba(255,255,255,0.15); }
+.filter-btn.active { color: #fff; border-color: var(--accent2); background: rgba(123,95,255,0.15); box-shadow: 0 0 12px rgba(123,95,255,0.2); }
+
+.surprise-btn {
+  padding: 11px 20px; border-radius: 12px; border: none;
+  background: linear-gradient(135deg, var(--accent2), var(--accent)); color: #fff;
+  font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Outfit', sans-serif;
+  box-shadow: 0 0 20px var(--glow-purple); margin-left: auto;
+}
+.surprise-btn:hover { transform: translateY(-2px); box-shadow: 0 0 35px var(--glow-purple); }
+
+.games-section { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 40px 80px; }
+
+.games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+
+.game-card {
+  border-radius: 18px; overflow: hidden; border: 1px solid var(--border);
+  background: var(--surface); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer; display: block;
+}
+.game-card:hover { transform: translateY(-6px) scale(1.02); border-color: rgba(255,255,255,0.15); box-shadow: 0 24px 50px rgba(0,0,0,0.5); }
+
+.game-img-wrap { position: relative; overflow: hidden; height: 150px; background: #0a0516; }
+.game-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+.game-card:hover .game-img-wrap img { transform: scale(1.08); }
+
+.game-emoji-fallback {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  font-size: 52px; background: linear-gradient(135deg, rgba(123,95,255,0.15), rgba(255,61,127,0.1));
+}
+
+.game-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(7,5,16,0.95) 0%, transparent 55%);
+  opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center;
+}
+.game-card:hover .game-overlay { opacity: 1; }
+
+.play-btn {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+  box-shadow: 0 0 30px var(--glow-pink); transform: scale(0.7); transition: transform 0.3s;
+}
+.game-card:hover .play-btn { transform: scale(1); }
+
+.game-info { padding: 14px; }
+.game-tags { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+
+.tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
+.tag-horror { background: rgba(200,60,60,0.15); color: #ff6b6b; border: 1px solid rgba(200,60,60,0.25); }
+.tag-arcade { background: rgba(0,229,255,0.10); color: var(--accent3); border: 1px solid rgba(0,229,255,0.2); }
+.tag-sports { background: rgba(0,255,128,0.10); color: #00ff80; border: 1px solid rgba(0,255,128,0.2); }
+.tag-puzzle { background: rgba(255,183,0,0.10); color: #ffb700; border: 1px solid rgba(255,183,0,0.2); }
+.tag-action { background: rgba(255,61,127,0.12); color: var(--accent); border: 1px solid rgba(255,61,127,0.2); }
+.tag-survival { background: rgba(123,95,255,0.12); color: var(--accent2); border: 1px solid rgba(123,95,255,0.2); }
+.tag-featured { background: rgba(255,183,0,0.15); color: #ffb700; border: 1px solid rgba(255,183,0,0.3); }
+
+.game-name { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.game-desc { font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+.no-results { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--muted); }
+.no-results-icon { font-size: 48px; margin-bottom: 16px; display: block; }
+.no-results-title { font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+
+footer { position: relative; z-index: 1; text-align: center; padding: 24px 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+
+@media (max-width: 768px) {
+  nav { padding: 0 18px; }
+  .nav-links a { padding: 6px 10px; font-size: 13px; }
+  .page-header { padding: 32px 20px 24px; }
+  .page-title { font-size: 38px; }
+  .controls { padding: 0 20px 24px; }
+  .games-section { padding: 0 20px 60px; }
+  .surprise-btn { margin-left: 0; }
+}
+
+@media (max-width: 480px) {
+  .games-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; }
 }
 </style>
 </head>
 <body>
-<div class="loader" id="loader">
-<div class="spinner"></div>
-<div style="margin-top:10px;">Loading Games...</div>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="grid-bg"></div>
+
+<nav>
+  <div class="nav-logo">LU<span>NA</span></div>
+  <div class="nav-links">
+    <a href="index.html">home</a>
+    <a href="my-games.html" class="active">games</a>
+    <a href="movies.html">movies</a>
+    <a href="music.html">music</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div>
+    <div class="page-eyebrow">all the games</div>
+    <div class="page-title">just <span>play</span></div>
+    <div class="page-count" id="gameCount">26 games available</div>
+  </div>
 </div>
-<div class="topbar">
-<div>🎮 Games</div>
-<a href="index.html">← Home</a>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" class="search-input" id="searchInput" placeholder="search for smth...">
+  </div>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="horror">Horror</button>
+  <button class="filter-btn" data-filter="arcade">Arcade</button>
+  <button class="filter-btn" data-filter="action">Action</button>
+  <button class="filter-btn" data-filter="sports">Sports</button>
+  <button class="filter-btn" data-filter="puzzle">Puzzle</button>
+  <button class="filter-btn" data-filter="survival">Survival</button>
+  <button class="surprise-btn" onclick="surpriseMe()">🎲 idk just pick one</button>
 </div>
-<iframe id="frame" src="singlefile.html" allow="pointer-lock *; fullscreen *; autoplay *"></iframe>
+
+<div class="games-section">
+  <div class="games-grid" id="gamesGrid"></div>
+</div>
+
+<footer>© 2026 Luna — Your Universe Awaits</footer>
+
 <script>
-const frame = document.getElementById("frame");
-const loader = document.getElementById("loader");
-frame.onload = () => {
-  loader.style.display = "none";
-};
-setTimeout(()=>loader.style.display="none",5000);
+const GAMES = [
+  { key: "geometrydash", title: "Geometry Dash", desc: "bro this game will make u rage so hard. tap to the beat or die instantly", emoji: "🎮", tags: ["arcade","featured"], img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322170/capsule_616x353.jpg?t=1703006148" },
+  { key: "ovo", title: "OVO", desc: "run jump slide repeat. actually pretty fun ngl", emoji: "🏃", tags: ["arcade","action"], img: "https://www.coolmathgames.com/sites/default/files/OvO_OG-logo.jpg" },
+  { key: "retrobowl", title: "Retro Bowl", desc: "manage a football team. way more addicting than it looks", emoji: "🏈", tags: ["sports"], img: "https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/store/software/switch/70010000048336/e3c1297d2ec30fe72a657af60c416d10c68a784bc874cf28e19cdf9261956919" },
+  { key: "brotato", title: "Brotato", desc: "ur a potato with guns. thats the whole game and its great", emoji: "🥔", tags: ["survival","action"], img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1942280/capsule_616x353.jpg" },
+  { key: "baldi", title: "Baldi's Basics Plus", desc: "get all the notebooks without getting caught. sounds easy isnt", emoji: "📚", tags: ["horror"], img: "" },
+  { key: "fnaf1", title: "FNAF 1", desc: "watch the cameras and dont let freddy get u. classic fr", emoji: "👻", tags: ["horror"], img: "https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/covers@main/38.png" },
+  { key: "fnaf2", title: "FNAF 2", desc: "even more animatronics now. good luck with that", emoji: "👻", tags: ["horror"], img: "" },
+  { key: "fnaf3", title: "FNAF 3", desc: "springtrap is terrifying and the vents dont help", emoji: "👻", tags: ["horror"], img: "" },
+  { key: "fnaf4", title: "FNAF 4", desc: "check the doors listen for breathing dont breathe wrong", emoji: "😱", tags: ["horror"], img: "" },
+  { key: "sisterlocation", title: "Sister Location", desc: "actually has a story this time. still scary tho", emoji: "🤖", tags: ["horror"], img: "" },
+  { key: "pizzeriasim", title: "Pizzeria Simulator", desc: "run a pizza place and also survive the night somehow", emoji: "🍕", tags: ["horror"], img: "" },
+  { key: "ucn", title: "Ultimate Custom Night", desc: "50 animatronics at once. dont even try night 20/20/20/20", emoji: "💀", tags: ["horror"], img: "" },
+  { key: "fnafworld", title: "FNAF World", desc: "fnaf but its an rpg which is actually kinda wild", emoji: "🌍", tags: ["action"], img: "" },
+  { key: "shrekhotel", title: "Five Nights at Shrek's Hotel", desc: "its exactly what u think it is. shrek jumpscare included", emoji: "🧅", tags: ["horror"], img: "" },
+  { key: "candys1", title: "Five Nights at Candy's", desc: "fan made fnaf that actually hits different", emoji: "🍬", tags: ["horror"], img: "" },
+  { key: "candys2", title: "Five Nights at Candy's 2", desc: "sequel goes even harder somehow", emoji: "🍬", tags: ["horror"], img: "" },
+  { key: "brawlsimulator", title: "Brawl Simulator", desc: "if u like brawl stars ull like this", emoji: "⚔️", tags: ["action"], img: "" },
+  { key: "survivorio", title: "Survivor IO", desc: "survive as long as u can and get stronger. addicting as hell", emoji: "🗡️", tags: ["survival","action"], img: "https://play-lh.googleusercontent.com/0Y0E_ij7a5KlxmZrHfHxxYgJDcfm5LKUODCWRi78-1_AV1YNiGH26gIhHLRwJrOTdg" },
+  { key: "plinko", title: "Plinko", desc: "drop stuff and watch it bounce. simple but oddly satisfying", emoji: "🎰", tags: ["arcade"], img: "" },
+  { key: "ironlung", title: "Iron Lung", desc: "ur stuck in a submarine in a sea of blood. genuinely terrifying", emoji: "🌊", tags: ["horror"], img: "" },
+  { key: "cloverpit", title: "Clover Pit", desc: "go down. dont look up", emoji: "🍀", tags: ["action"], img: "" },
+  { key: "fivenightsatepsteins", title: "Five Nights at Epstein's", desc: "not gonna explain just play it", emoji: "🌙", tags: ["horror"], img: "" },
+  { key: "bartblast", title: "Bart Blast", desc: "bart simpson but its a shooter basically", emoji: "💥", tags: ["action"], img: "" },
+  { key: "fused", title: "Fused", desc: "merge tiles to clear the board. good for when ur bored", emoji: "🧩", tags: ["puzzle"], img: "" },
+  { key: "christmasmassacre", title: "Christmas Massacre", desc: "christmas themed horror game. its actually kinda dark lol", emoji: "🎄", tags: ["horror"], img: "" },
+  { key: "cellmachine", title: "Cell Machine", desc: "build machines out of cells. sounds boring is actually sick", emoji: "🔬", tags: ["puzzle"], img: "" }
+];
+
+let currentFilter = 'all';
+let searchQuery = '';
+
+function renderGames() {
+  const grid = document.getElementById('gamesGrid');
+  const filtered = GAMES.filter(g => {
+    const matchesFilter = currentFilter === 'all' || g.tags.includes(currentFilter);
+    const matchesSearch = g.title.toLowerCase().includes(searchQuery) || g.desc.toLowerCase().includes(searchQuery);
+    return matchesFilter && matchesSearch;
+  });
+
+  document.getElementById('gameCount').textContent = `${filtered.length} game${filtered.length !== 1 ? 's' : ''} available`;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="no-results"><span class="no-results-icon">🔭</span><div class="no-results-title">No games found</div><div>Try a different search or filter</div></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(g => `
+    <a href="play.html?game=${g.key}" class="game-card">
+      <div class="game-img-wrap">
+        ${g.img
+          ? `<img src="${g.img}" alt="${g.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="game-emoji-fallback" style="display:none">${g.emoji}</div>`
+          : `<div class="game-emoji-fallback">${g.emoji}</div>`}
+        <div class="game-overlay"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="game-info">
+        <div class="game-tags">${g.tags.map(t => `<span class="tag tag-${t}">${t}</span>`).join('')}</div>
+        <div class="game-name">${g.title}</div>
+        <div class="game-desc">${g.desc}</div>
+      </div>
+    </a>
+  `).join('');
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderGames();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchQuery = e.target.value.toLowerCase();
+  renderGames();
+});
+
+function surpriseMe() {
+  const pick = GAMES[Math.floor(Math.random() * GAMES.length)];
+  window.location.href = `play.html?game=${pick.key}`;
+}
+
+renderGames();
 </script>
 </body>
 </html>

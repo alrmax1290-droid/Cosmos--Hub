@@ -719,6 +719,54 @@ footer {
 </head>
 <body class="dark-mode">
 
+<style>
+.luna-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 58px;
+  background: rgba(4,4,10,0.98);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  font-family: 'Space Mono', 'Courier New', monospace;
+}
+.luna-nav-logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #e8eeff;
+  letter-spacing: 3px;
+  text-decoration: none;
+}
+.luna-nav-logo span { color: #7090ff; }
+.luna-nav-links { display: flex; gap: 2px; }
+.luna-nav-links a {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #606880;
+  transition: all 0.2s;
+  text-decoration: none;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.luna-nav-links a:hover { color: #d0d8f0; background: rgba(255,255,255,0.06); }
+.luna-nav-links a.active { color: #a0b8ff; }
+</style>
+
+<nav class="luna-nav">
+  <a href="index.html" class="luna-nav-logo">LU<span>NA</span></a>
+  <div class="luna-nav-links">
+    <a href="index.html">home</a>
+    <a href="singlefile.html" class="active">games</a>
+    <a href="movies.html">movies</a>
+    <a href="music.html">music</a>
+  </div>
+</nav>
+
     <header>
         <div class="header-content">
             <div class="logo">Luna</div>

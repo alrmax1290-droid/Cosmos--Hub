@@ -1419,5 +1419,281 @@ async function loadCount() {
 loadCount();
 </script>
 
+<!-- PAGE TRANSITION OVERLAY -->
+<div id="pageTransition" style="
+  position:fixed; inset:0; z-index:999999;
+  background:#04040a; opacity:0; pointer-events:none;
+  transition: opacity 0.25s ease;
+"></div>
+
+<!-- NOTES WIDGET -->
+<div id="notesWidget" style="
+  position:fixed; bottom:80px; right:20px; z-index:9990;
+  display:none; flex-direction:column;
+  width:260px; border-radius:12px;
+  background:#080812; border:1px solid rgba(112,144,255,0.2);
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+">
+  <div style="
+    padding:10px 14px; display:flex; align-items:center;
+    justify-content:space-between; border-bottom:1px solid rgba(112,144,255,0.1);
+    font-family:'Space Mono',monospace; font-size:11px; color:#7090ff;
+    letter-spacing:2px; cursor:move; user-select:none;
+  " id="notesDrag">// notes
+    <button onclick="document.getElementById('notesWidget').style.display='none'" style="
+      background:none;border:none;color:#606880;cursor:pointer;font-size:16px;line-height:1;
+    ">×</button>
+  </div>
+  <textarea id="notesArea" placeholder="type something..." style="
+    background:transparent; border:none; outline:none; resize:none;
+    color:#d0d8f0; font-family:'Space Grotesk',sans-serif; font-size:13px;
+    padding:12px 14px; height:160px; line-height:1.6;
+  "></textarea>
+  <div style="padding:8px 14px; font-size:10px; color:#303848; font-family:'Space Mono',monospace;">auto-saved</div>
+</div>
+
+<!-- TIMER WIDGET -->
+<div id="timerWidget" style="
+  position:fixed; bottom:80px; left:20px; z-index:9990;
+  display:none; flex-direction:column;
+  width:220px; border-radius:12px;
+  background:#080812; border:1px solid rgba(112,144,255,0.2);
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+">
+  <div style="
+    padding:10px 14px; display:flex; align-items:center;
+    justify-content:space-between; border-bottom:1px solid rgba(112,144,255,0.1);
+    font-family:'Space Mono',monospace; font-size:11px; color:#7090ff; letter-spacing:2px;
+  ">// timer
+    <button onclick="document.getElementById('timerWidget').style.display='none'" style="
+      background:none;border:none;color:#606880;cursor:pointer;font-size:16px;line-height:1;
+    ">×</button>
+  </div>
+  <div style="padding:16px 14px;">
+    <div id="timerDisplay" style="
+      font-family:'Space Mono',monospace; font-size:32px; font-weight:700;
+      color:#e8eeff; text-align:center; margin-bottom:12px; letter-spacing:2px;
+    ">00:00</div>
+    <div style="display:flex; gap:6px; margin-bottom:10px;">
+      <input type="time" id="timerEnd" style="
+        flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);
+        color:#d0d8f0; padding:6px 10px; border-radius:6px; font-size:12px;
+        font-family:'Space Grotesk',sans-serif; outline:none;
+      ">
+      <button onclick="startTimer()" style="
+        padding:6px 12px; border-radius:6px; background:#7090ff;
+        border:none; color:#fff; font-size:12px; cursor:pointer;
+        font-weight:600;
+      ">go</button>
+    </div>
+    <div style="font-size:11px; color:#606880; font-family:'Space Mono',monospace; text-align:center;" id="timerLabel">set end time</div>
+  </div>
+</div>
+
+<!-- WIDGET BUTTONS -->
+<div style="
+  position:fixed; bottom:20px; right:20px; z-index:9989;
+  display:flex; gap:8px;
+">
+  <button onclick="toggleNotes()" style="
+    width:40px; height:40px; border-radius:10px;
+    background:#080812; border:1px solid rgba(112,144,255,0.2);
+    color:#7090ff; font-size:16px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.2s; backdrop-filter:blur(8px);
+  " title="notes">📝</button>
+  <button onclick="toggleTimer()" style="
+    width:40px; height:40px; border-radius:10px;
+    background:#080812; border:1px solid rgba(112,144,255,0.2);
+    color:#7090ff; font-size:16px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.2s; backdrop-filter:blur(8px);
+  " title="class timer">⏱️</button>
+</div>
+
+<!-- SEASONAL CANVAS -->
+<canvas id="seasonCanvas" style="
+  position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;
+"></canvas>
+
+<script>
+// PAGE TRANSITIONS
+document.querySelectorAll('a[href]').forEach(link => {
+  const href = link.getAttribute('href');
+  if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('javascript')) return;
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const overlay = document.getElementById('pageTransition');
+    overlay.style.opacity = '1';
+    overlay.style.pointerEvents = 'all';
+    setTimeout(() => { window.location.href = href; }, 250);
+  });
+});
+// Fade in on load
+window.addEventListener('load', () => {
+  const overlay = document.getElementById('pageTransition');
+  overlay.style.opacity = '0';
+});
+
+// SPACE DEBRIS
+const seasonCanvas = document.getElementById('seasonCanvas');
+const seasonCtx = seasonCanvas.getContext('2d');
+let particles = [];
+
+function resizeSeason() {
+  seasonCanvas.width = window.innerWidth;
+  seasonCanvas.height = window.innerHeight;
+}
+resizeSeason();
+window.addEventListener('resize', resizeSeason);
+
+const debrisTypes = ['asteroid', 'shard', 'dot', 'ring'];
+
+function createDebris() {
+  const type = debrisTypes[Math.floor(Math.random() * debrisTypes.length)];
+  return {
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    size: Math.random() * 6 + 2,
+    speedX: (Math.random() - 0.5) * 0.4,
+    speedY: Math.random() * 0.3 + 0.1,
+    opacity: Math.random() * 0.4 + 0.1,
+    rotation: Math.random() * Math.PI * 2,
+    rotSpeed: (Math.random() - 0.5) * 0.015,
+    type,
+    color: ['#7090ff','#a0b8ff','#4060aa','#c8d8ff','#304080'][Math.floor(Math.random()*5)],
+    sides: Math.floor(Math.random() * 3) + 4,
+  };
+}
+
+for (let i = 0; i < 50; i++) particles.push(createDebris());
+
+function drawPolygon(ctx, x, y, sides, size) {
+  ctx.beginPath();
+  for (let i = 0; i < sides; i++) {
+    const angle = (i / sides) * Math.PI * 2;
+    const r = size * (0.7 + Math.random() * 0.3);
+    const px = x + Math.cos(angle) * r;
+    const py = y + Math.sin(angle) * r;
+    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+}
+
+function drawSeason() {
+  seasonCtx.clearRect(0, 0, seasonCanvas.width, seasonCanvas.height);
+  particles.forEach(p => {
+    seasonCtx.save();
+    seasonCtx.globalAlpha = p.opacity;
+    seasonCtx.translate(p.x, p.y);
+    seasonCtx.rotate(p.rotation);
+    seasonCtx.strokeStyle = p.color;
+    seasonCtx.fillStyle = p.color + '44';
+    seasonCtx.lineWidth = 1;
+
+    if (p.type === 'asteroid') {
+      drawPolygon(seasonCtx, 0, 0, p.sides, p.size);
+      seasonCtx.fill();
+      seasonCtx.stroke();
+    } else if (p.type === 'shard') {
+      seasonCtx.beginPath();
+      seasonCtx.moveTo(0, -p.size);
+      seasonCtx.lineTo(p.size * 0.4, p.size * 0.6);
+      seasonCtx.lineTo(-p.size * 0.4, p.size * 0.6);
+      seasonCtx.closePath();
+      seasonCtx.fill();
+      seasonCtx.stroke();
+    } else if (p.type === 'dot') {
+      seasonCtx.beginPath();
+      seasonCtx.arc(0, 0, p.size * 0.5, 0, Math.PI * 2);
+      seasonCtx.fillStyle = p.color;
+      seasonCtx.fill();
+    } else if (p.type === 'ring') {
+      seasonCtx.beginPath();
+      seasonCtx.arc(0, 0, p.size, 0, Math.PI * 2);
+      seasonCtx.stroke();
+    }
+
+    seasonCtx.restore();
+
+    p.y += p.speedY;
+    p.x += p.speedX;
+    p.rotation += p.rotSpeed;
+
+    if (p.y > seasonCanvas.height + 20) {
+      p.y = -20;
+      p.x = Math.random() * seasonCanvas.width;
+    }
+    if (p.x > seasonCanvas.width + 20) p.x = -20;
+    if (p.x < -20) p.x = seasonCanvas.width + 20;
+  });
+  requestAnimationFrame(drawSeason);
+}
+drawSeason();
+
+// NOTES WIDGET
+const notesArea = document.getElementById('notesArea');
+notesArea.value = localStorage.getItem('luna_notes') || '';
+notesArea.addEventListener('input', () => {
+  localStorage.setItem('luna_notes', notesArea.value);
+});
+
+function toggleNotes() {
+  const w = document.getElementById('notesWidget');
+  w.style.display = w.style.display === 'flex' ? 'none' : 'flex';
+}
+
+// Drag notes widget
+(function() {
+  const widget = document.getElementById('notesWidget');
+  const handle = document.getElementById('notesDrag');
+  let dragging = false, ox = 0, oy = 0;
+  handle.addEventListener('mousedown', e => {
+    dragging = true;
+    ox = e.clientX - widget.getBoundingClientRect().left;
+    oy = e.clientY - widget.getBoundingClientRect().top;
+  });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    widget.style.left = (e.clientX - ox) + 'px';
+    widget.style.top = (e.clientY - oy) + 'px';
+    widget.style.right = 'auto';
+    widget.style.bottom = 'auto';
+  });
+  document.addEventListener('mouseup', () => dragging = false);
+})();
+
+// TIMER WIDGET
+function toggleTimer() {
+  const w = document.getElementById('timerWidget');
+  w.style.display = w.style.display === 'flex' ? 'none' : 'flex';
+}
+
+let timerInterval = null;
+function startTimer() {
+  const input = document.getElementById('timerEnd').value;
+  if (!input) return;
+  if (timerInterval) clearInterval(timerInterval);
+
+  function update() {
+    const now = new Date();
+    const [h, m] = input.split(':').map(Number);
+    const end = new Date();
+    end.setHours(h, m, 0, 0);
+    if (end < now) end.setDate(end.getDate() + 1);
+    const diff = Math.max(0, Math.floor((end - now) / 1000));
+    const mins = Math.floor(diff / 60);
+    const secs = diff % 60;
+    const display = document.getElementById('timerDisplay');
+    const label = document.getElementById('timerLabel');
+    display.textContent = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+    display.style.color = diff < 60 ? '#ff6060' : diff < 300 ? '#ffb060' : '#e8eeff';
+    label.textContent = diff === 0 ? '🔔 time!' : `until ${input}`;
+    if (diff === 0) clearInterval(timerInterval);
+  }
+  update();
+  timerInterval = setInterval(update, 1000);
+}
+</script>
 </body>
 </html>

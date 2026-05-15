@@ -1182,9 +1182,9 @@ const cloakOptions = [
   { title: 'Google Docs', favicon: 'https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico' },
   { title: 'Khan Academy', favicon: 'https://www.khanacademy.org/favicon.ico' },
   { title: 'Quizlet', favicon: 'https://quizlet.com/favicon.ico' },
-  { title: 'Luna', favicon: 'favicon.svg' },
+  { title: 'Luna', favicon: 'favicon.png' },
 ];
-let cloakIndex = parseInt(localStorage.getItem('luna_cloak') || '4');
+let cloakIndex = parseInt(localStorage.getItem('luna_cloak') ?? '4');
 
 function applyCloak(index) {
   const cloak = cloakOptions[index];

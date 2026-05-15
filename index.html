@@ -613,6 +613,10 @@ body.alt-theme {
   footer { flex-direction: column; gap: 8px; text-align: center; }
 }
 </style>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#04040a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Luna">
 </head>
 <body>
 
@@ -641,6 +645,7 @@ body.alt-theme {
       <a href="movies.html">movies</a>
       <a href="music.html">music</a>
     </div>
+    <button class="theme-btn" id="cloakBtn" title="tab cloak">🔒</button>
     <button class="theme-btn" id="themeBtn" title="switch theme">🌙</button>
   </div>
 </nav>
@@ -696,7 +701,7 @@ body.alt-theme {
     <a href="singlefile.html" class="quick-card">
       <span class="qc-icon">🎮</span>
       <div class="qc-title">games</div>
-      <div class="qc-desc">like 25+ games on here. search what u want</div>
+      <div class="qc-desc">800+ games on here. search what u want</div>
     </a>
     <a href="movies.html" class="quick-card">
       <span class="qc-icon">🎬</span>
@@ -741,7 +746,7 @@ body.alt-theme {
 
   <!-- STATS -->
   <div class="stats-row">
-    <div class="stat"><div class="stat-n">25+</div><div class="stat-l">games on here</div></div>
+    <div class="stat"><div class="stat-n">800+</div><div class="stat-l">games on here</div></div>
     <div class="stat"><div class="stat-n">3</div><div class="stat-l">things to do</div></div>
     <div class="stat"><div class="stat-n">0</div><div class="stat-l">downloads ever</div></div>
     <div class="stat"><div class="stat-n">24/7</div><div class="stat-l">always up</div></div>
@@ -1170,7 +1175,35 @@ function triggerEasterEgg() {
   }, 3500);
 }
 
-// VISITOR COUNT
+// TAB CLOAK
+const cloakBtn = document.getElementById('cloakBtn');
+const cloakOptions = [
+  { title: 'Google Classroom', favicon: 'https://ssl.gstatic.com/classroom/favicon.png' },
+  { title: 'Google Docs', favicon: 'https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico' },
+  { title: 'Khan Academy', favicon: 'https://www.khanacademy.org/favicon.ico' },
+  { title: 'Quizlet', favicon: 'https://quizlet.com/favicon.ico' },
+  { title: 'Luna', favicon: 'favicon.svg' },
+];
+let cloakIndex = parseInt(localStorage.getItem('luna_cloak') || '4');
+
+function applyCloak(index) {
+  const cloak = cloakOptions[index];
+  document.title = cloak.title;
+  let link = document.querySelector("link[rel~='icon']");
+  if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
+  link.href = cloak.favicon;
+  localStorage.setItem('luna_cloak', index);
+  cloakBtn.title = `tab cloak: ${cloak.title}`;
+}
+
+cloakBtn.addEventListener('click', () => {
+  cloakIndex = (cloakIndex + 1) % cloakOptions.length;
+  applyCloak(cloakIndex);
+});
+
+applyCloak(cloakIndex);
+
+
 async function loadCount() {
   try {
     const res = await fetch('https://cosmos-hub.alrmax1290.workers.dev/count');

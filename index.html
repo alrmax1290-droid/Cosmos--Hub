@@ -653,6 +653,7 @@ body.alt-theme {
       <a href="singlefile.html">games</a>
       <a href="movies.html">movies</a>
       <a href="music.html">music</a>
+      <a href="settings.html">settings</a>
     </div>
     <button class="theme-btn" id="camoBtn" title="camo mode">🎭</button>
     <button class="theme-btn" id="musicBtn" title="lo-fi music">🎵</button>
@@ -756,7 +757,8 @@ body.alt-theme {
 
 <!-- LO-FI MUSIC -->
 <audio id="lofiAudio" loop style="display:none">
-  <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_946f8a8b01.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/audio/2024/11/13/audio_a5310c1455.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
 </audio>
 
 <section class="hero">
@@ -1286,6 +1288,14 @@ function triggerEasterEgg() {
     toast.classList.remove('show');
   }, 3500);
 }
+
+// PANIC BUTTON
+document.addEventListener('keydown', e => {
+  if (e.key === 'F1' && localStorage.getItem('luna_panic') !== 'false') {
+    e.preventDefault();
+    window.location.href = 'https://google.com';
+  }
+});
 
 // ANNOUNCEMENT BAR
 const announcements = [

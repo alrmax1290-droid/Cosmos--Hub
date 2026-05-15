@@ -1109,13 +1109,14 @@ function openZone(file) {
     const url = file.url.startsWith("http")
         ? file.url
         : file.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
+
     if (zoneFrame.contentDocument === null) {
         zoneFrame = document.createElement("iframe");
         zoneFrame.id = "zoneFrame";
         zoneFrame.allow = "pointer-lock *; fullscreen *; autoplay *";
         zoneViewer.appendChild(zoneFrame);
     }
-    zoneFrame.src = url;
+
     document.getElementById('zoneName').textContent = file.name;
     document.getElementById('zoneId').textContent = file.id;
     document.getElementById('zoneAuthor').textContent = "by " + file.author;
@@ -1124,6 +1125,18 @@ function openZone(file) {
     }
     zoneViewer.style.cssText = "display:flex !important; flex-direction:column; position:fixed; inset:0; z-index:99999;";
     zoneViewer.hidden = false;
+
+    // Fetch and write into iframe so it renders as HTML regardless of CDN content-type
+    fetch(url + "?t=" + Date.now())
+        .then(r => r.text())
+        .then(html => {
+            zoneFrame.srcdoc = html;
+        })
+        .catch(() => {
+            // fallback to src if fetch fails
+            zoneFrame.src = url;
+        });
+
     try {
         const u = new URL(window.location);
         u.searchParams.set('id', file.id);

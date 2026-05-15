@@ -1106,31 +1106,29 @@ function filterZones() {
 }
 
 function openZone(file) {
-    if (file.url.startsWith("http")) {
-        window.open(file.url, "_blank");
-    } else {
-        const url = file.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
-        if (zoneFrame.contentDocument === null) {
-            zoneFrame = document.createElement("iframe");
-            zoneFrame.id = "zoneFrame";
-            zoneFrame.allow = "pointer-lock *; fullscreen *; autoplay *";
-            zoneViewer.appendChild(zoneFrame);
-        }
-        zoneFrame.src = url;
-        document.getElementById('zoneName').textContent = file.name;
-        document.getElementById('zoneId').textContent = file.id;
-        document.getElementById('zoneAuthor').textContent = "by " + file.author;
-        if (file.authorLink) {
-            document.getElementById('zoneAuthor').href = file.authorLink;
-        }
-        zoneViewer.style.display = "flex";
-        zoneViewer.hidden = false;
-        try {
-            const u = new URL(window.location);
-            u.searchParams.set('id', file.id);
-            history.pushState(null, '', u.toString());
-        } catch(error){}
+    const url = file.url.startsWith("http")
+        ? file.url
+        : file.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
+    if (zoneFrame.contentDocument === null) {
+        zoneFrame = document.createElement("iframe");
+        zoneFrame.id = "zoneFrame";
+        zoneFrame.allow = "pointer-lock *; fullscreen *; autoplay *";
+        zoneViewer.appendChild(zoneFrame);
     }
+    zoneFrame.src = url;
+    document.getElementById('zoneName').textContent = file.name;
+    document.getElementById('zoneId').textContent = file.id;
+    document.getElementById('zoneAuthor').textContent = "by " + file.author;
+    if (file.authorLink) {
+        document.getElementById('zoneAuthor').href = file.authorLink;
+    }
+    zoneViewer.style.display = "flex";
+    zoneViewer.hidden = false;
+    try {
+        const u = new URL(window.location);
+        u.searchParams.set('id', file.id);
+        history.pushState(null, '', u.toString());
+    } catch(error){}
 }
 
 function aboutBlank() {

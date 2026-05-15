@@ -608,9 +608,18 @@ body.alt-theme {
 
 @media (max-width: 600px) {
   nav { padding: 0 18px; }
-  .nav-links a { padding: 5px 10px; font-size: 12px; }
+  .nav-links a { padding: 5px 8px; font-size: 11px; }
+  .theme-btn { width: 28px; height: 28px; font-size: 12px; }
   .section { padding: 40px 18px; }
   footer { flex-direction: column; gap: 8px; text-align: center; }
+  .hero { padding: 30px 18px; gap: 30px; }
+  .hero-title { font-size: clamp(32px, 10vw, 60px); }
+  .quick-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .games-grid { grid-template-columns: repeat(2, 1fr); }
+  .nav-right { gap: 4px; }
+  .gotd { flex-direction: column; gap: 12px; }
+  .gotd-play { width: 100%; text-align: center; }
 }
 </style>
 <link rel="manifest" href="manifest.json">
@@ -637,7 +646,7 @@ body.alt-theme {
 <div class="moon-glow"></div>
 
 <nav>
-  <div class="nav-logo">LU<span>NA</span></div>
+  <a href="index.html" class="nav-logo">LU<span>NA</span></a>
   <div class="nav-right">
     <div class="nav-links">
       <a href="index.html" class="active">home</a>
@@ -645,10 +654,110 @@ body.alt-theme {
       <a href="movies.html">movies</a>
       <a href="music.html">music</a>
     </div>
+    <button class="theme-btn" id="camoBtn" title="camo mode">🎭</button>
+    <button class="theme-btn" id="musicBtn" title="lo-fi music">🎵</button>
+    <button class="theme-btn" id="changelogBtn" title="whats new">📋</button>
     <button class="theme-btn" id="cloakBtn" title="tab cloak">🔒</button>
     <button class="theme-btn" id="themeBtn" title="switch theme">🌙</button>
   </div>
 </nav>
+
+<!-- ANNOUNCEMENT BAR -->
+<div id="announcementBar" style="
+  background: linear-gradient(90deg, rgba(112,144,255,0.15), rgba(112,144,255,0.05), rgba(112,144,255,0.15));
+  border-bottom: 1px solid rgba(112,144,255,0.2);
+  padding: 6px 20px;
+  text-align: center;
+  font-size: 12px;
+  font-family: 'Space Mono', monospace;
+  color: #7090ff;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+">
+  <span id="announcementText"></span>
+  <button onclick="document.getElementById('announcementBar').style.display='none'" style="
+    background: none; border: none; color: #7090ff; cursor: pointer;
+    font-size: 14px; position: absolute; right: 12px; opacity: 0.6;
+  ">×</button>
+</div>
+
+<!-- CAMO OVERLAY -->
+<div id="camoOverlay" style="display:none; position:fixed; inset:0; z-index:99999; background:#fff; overflow:auto;">
+  <div style="max-width:900px; margin:0 auto; padding:20px; font-family:Google Sans,Arial,sans-serif;">
+    <div style="display:flex; align-items:center; gap:16px; padding:12px 0; border-bottom:1px solid #e0e0e0; margin-bottom:20px;">
+      <img src="https://ssl.gstatic.com/classroom/favicon.png" width="32" height="32">
+      <span style="font-size:22px; color:#1a73e8; font-weight:500;">Google Classroom</span>
+      <button onclick="exitCamo()" style="margin-left:auto; background:#1a73e8; color:#fff; border:none; border-radius:4px; padding:8px 16px; cursor:pointer; font-size:14px;">Exit Camo</button>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:16px;">
+      <div style="border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; cursor:pointer;">
+        <div style="height:100px; background:linear-gradient(135deg,#1a73e8,#0d47a1); display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px;">📐</div>
+        <div style="padding:12px;"><div style="font-weight:500; font-size:14px;">Math - Period 3</div><div style="font-size:12px; color:#666; margin-top:4px;">Mr. Johnson</div></div>
+      </div>
+      <div style="border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; cursor:pointer;">
+        <div style="height:100px; background:linear-gradient(135deg,#34a853,#1e8e3e); display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px;">📚</div>
+        <div style="padding:12px;"><div style="font-weight:500; font-size:14px;">English - Period 4</div><div style="font-size:12px; color:#666; margin-top:4px;">Mrs. Smith</div></div>
+      </div>
+      <div style="border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; cursor:pointer;">
+        <div style="height:100px; background:linear-gradient(135deg,#ea4335,#c5221f); display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px;">🔬</div>
+        <div style="padding:12px;"><div style="font-weight:500; font-size:14px;">Science - Period 5</div><div style="font-size:12px; color:#666; margin-top:4px;">Mr. Davis</div></div>
+      </div>
+      <div style="border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; cursor:pointer;">
+        <div style="height:100px; background:linear-gradient(135deg,#fbbc04,#e37400); display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px;">🌍</div>
+        <div style="padding:12px;"><div style="font-weight:500; font-size:14px;">History - Period 6</div><div style="font-size:12px; color:#666; margin-top:4px;">Ms. Wilson</div></div>
+      </div>
+    </div>
+    <div style="margin-top:30px; padding:20px; background:#f8f9fa; border-radius:8px;">
+      <div style="font-weight:500; margin-bottom:12px; color:#3c4043;">📋 Upcoming Assignments</div>
+      <div style="font-size:14px; color:#5f6368; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between;"><span>Math Worksheet Ch. 7</span><span style="color:#1a73e8;">Due Tomorrow</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>English Essay Draft</span><span style="color:#ea4335;">Due Today</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>Science Lab Report</span><span style="color:#5f6368;">Due Friday</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHANGELOG MODAL -->
+<div id="changelogModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:20px;">
+  <div style="background:#080812; border:1px solid rgba(112,144,255,0.2); border-radius:16px; max-width:480px; width:100%; padding:28px; position:relative; max-height:80vh; overflow-y:auto;">
+    <div style="font-family:'Space Mono',monospace; font-size:10px; color:#7090ff; letter-spacing:3px; text-transform:uppercase; margin-bottom:16px;">// what's new</div>
+    <div style="font-size:22px; font-weight:700; color:#e8eeff; margin-bottom:20px;">Luna Updates</div>
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div style="border-left:2px solid #7090ff; padding-left:16px;">
+        <div style="font-size:11px; color:#7090ff; font-family:'Space Mono',monospace; margin-bottom:6px;">v2.0 — TODAY</div>
+        <div style="font-size:14px; color:#d0d8f0; line-height:1.6;">
+          ✦ 800+ games now available<br>
+          ✦ Tab cloak — look like google classroom<br>
+          ✦ Camo mode added<br>
+          ✦ Lo-fi background music<br>
+          ✦ Recently played tracking<br>
+          ✦ Escape key closes games<br>
+          ✦ PWA — install as app on chromebook
+        </div>
+      </div>
+      <div style="border-left:2px solid rgba(112,144,255,0.3); padding-left:16px;">
+        <div style="font-size:11px; color:#606880; font-family:'Space Mono',monospace; margin-bottom:6px;">v1.0 — LAUNCH</div>
+        <div style="font-size:14px; color:#606880; line-height:1.6;">
+          ✦ Luna launched<br>
+          ✦ Games, movies, music<br>
+          ✦ Moon theme, custom cursor<br>
+          ✦ Easter egg (type "lunar")
+        </div>
+      </div>
+    </div>
+    <button onclick="closeChangelog()" style="margin-top:24px; width:100%; padding:12px; background:#7090ff; color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Space Grotesk',sans-serif;">got it</button>
+  </div>
+</div>
+
+<!-- LO-FI MUSIC -->
+<audio id="lofiAudio" loop style="display:none">
+  <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_946f8a8b01.mp3" type="audio/mpeg">
+</audio>
 
 <section class="hero">
   <div class="hero-left">
@@ -1160,6 +1269,9 @@ function triggerEasterEgg() {
   const toast = document.getElementById('easterToast');
   overlay.style.display = 'block';
   toast.classList.add('show');
+  setTimeout(() => {
+    window.location.href = 'secret.html';
+  }, 1500);
   const colors = ['#7090ff','#a0b8ff','#c8d8ff','#ffffff'];
   for (let i = 0; i < 60; i++) {
     const p = document.createElement('div');
@@ -1175,7 +1287,78 @@ function triggerEasterEgg() {
   }, 3500);
 }
 
-// TAB CLOAK
+// ANNOUNCEMENT BAR
+const announcements = [
+  "🌙 welcome to luna — 800+ games and counting",
+  "💡 tip: press escape to close a game",
+  "🎭 try camo mode if a teacher walks by",
+  "🔒 tab cloak cycles through google classroom, docs, and more",
+  "🎮 type 'lunar' on the homepage for a surprise",
+  "📲 install luna as an app — look for the install button in your address bar",
+  "🎵 lo-fi music now available — click the 🎵 button",
+];
+const announcementEl = document.getElementById('announcementText');
+announcementEl.textContent = announcements[Math.floor(Math.random() * announcements.length)];
+
+// CAMO MODE
+const camoBtn = document.getElementById('camoBtn');
+function exitCamo() {
+  document.getElementById('camoOverlay').style.display = 'none';
+  document.title = 'Luna';
+  // restore favicon
+  applyCloak(cloakIndex);
+}
+camoBtn.addEventListener('click', () => {
+  document.getElementById('camoOverlay').style.display = 'block';
+  document.title = 'Google Classroom';
+  let link = document.querySelector("link[rel~='icon']");
+  if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
+  link.href = 'https://ssl.gstatic.com/classroom/favicon.png';
+});
+// Escape exits camo too
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    exitCamo();
+    closeChangelog();
+  }
+});
+
+// CHANGELOG
+const changelogBtn = document.getElementById('changelogBtn');
+function closeChangelog() {
+  document.getElementById('changelogModal').style.display = 'none';
+}
+changelogBtn.addEventListener('click', () => {
+  document.getElementById('changelogModal').style.display = 'flex';
+});
+// Show changelog on first visit
+if (!localStorage.getItem('luna_changelog_v2')) {
+  setTimeout(() => {
+    document.getElementById('changelogModal').style.display = 'flex';
+    localStorage.setItem('luna_changelog_v2', '1');
+  }, 2000);
+}
+
+// LO-FI MUSIC
+const musicBtn = document.getElementById('musicBtn');
+const lofiAudio = document.getElementById('lofiAudio');
+let musicPlaying = false;
+musicBtn.addEventListener('click', () => {
+  if (musicPlaying) {
+    lofiAudio.pause();
+    musicBtn.textContent = '🎵';
+    musicBtn.style.color = '';
+    musicPlaying = false;
+  } else {
+    lofiAudio.volume = 0.3;
+    lofiAudio.play().catch(() => {});
+    musicBtn.textContent = '🔊';
+    musicBtn.style.color = '#7090ff';
+    musicPlaying = true;
+  }
+});
+
+
 const cloakBtn = document.getElementById('cloakBtn');
 const cloakOptions = [
   { title: 'Google Classroom', favicon: 'https://ssl.gstatic.com/classroom/favicon.png' },

@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Play - Cosmos Hub</title>
+<title>Play - Luna</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -333,8 +334,8 @@ iframe {
     <div class="topbar-game-name" id="gameTitle">Loading...</div>
   </div>
   <div class="topbar-right">
-    <a href="my-games.html" class="tb-btn">← Back</a>
-    <button id="fullscreenBtn" class="tb-btn primary" type="button">⛶ Fullscreen</button>
+    <a href="singlefile.html" class="tb-btn">← Back</a>
+    <button id="fullscreenBtn" class="tb-btn primary" type="button">⛶ Fullscreen <span style="opacity:0.6;font-weight:400;font-size:11px;">[F]</span></button>
     <button id="blankBtn" class="tb-btn" type="button">↗ New Tab</button>
   </div>
 </div>
@@ -348,7 +349,7 @@ iframe {
     <span class="missing-icon">🚫</span>
     <div class="missing-title">Game Not Found</div>
     <div class="missing-text">The game you're looking for doesn't exist in the launcher. Head back and pick something else.</div>
-    <a href="my-games.html" class="missing-btn">← Back to Games</a>
+    <a href="singlefile.html" class="missing-btn">← Back to Games</a>
   </div>
 </div>
 
@@ -412,7 +413,7 @@ iframe {
 
   titleEl.textContent = currentGame.title;
   loadingNameEl.textContent = currentGame.title;
-  document.title = currentGame.title + " — Cosmos Hub";
+  document.title = currentGame.title + " — Luna";
   frame.src = currentGame.url;
 
   frame.addEventListener("load", hideLoader);
@@ -464,7 +465,7 @@ iframe {
       <html lang="en">
       <head>
         <meta charset="UTF-8">
-        <title>${currentGame.title} — Cosmos Hub</title>
+        <title>${currentGame.title} — Luna</title>
         <style>
           html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
           iframe { border: none; width: 100vw; height: 100vh; display: block; }

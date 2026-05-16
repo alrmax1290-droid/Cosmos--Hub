@@ -757,6 +757,7 @@ body.alt-theme {
 
 <!-- LO-FI MUSIC -->
 <audio id="lofiAudio" loop style="display:none">
+  <source src="lofi.mp3" type="audio/mpeg">
   <source src="https://cdn.pixabay.com/audio/2024/11/13/audio_a5310c1455.mp3" type="audio/mpeg">
   <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
 </audio>
@@ -772,6 +773,21 @@ body.alt-theme {
     <div class="hero-btns">
       <a href="singlefile.html" class="btn-main">games</a>
       <button onclick="surpriseMe()" class="btn-sec">random game</button>
+    </div>
+    <div style="margin-top:16px; position:relative; max-width:340px;">
+      <input id="heroSearch" type="text" placeholder="search games..." style="
+        width:100%; padding:10px 16px 10px 36px;
+        background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);
+        border-radius:8px; color:#d0d8f0; font-size:13px;
+        font-family:'Space Grotesk',sans-serif; outline:none; transition:all 0.2s;
+      " oninput="heroSearchGames(this.value)" onfocus="this.style.borderColor='rgba(112,144,255,0.3)'" onblur="this.style.borderColor='rgba(255,255,255,0.06)'">
+      <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#606880;font-size:14px;">🔍</span>
+      <div id="heroSearchResults" style="
+        display:none; position:absolute; top:100%; left:0; right:0; margin-top:4px;
+        background:#080812; border:1px solid rgba(112,144,255,0.2);
+        border-radius:8px; overflow:hidden; z-index:100;
+        max-height:200px; overflow-y:auto;
+      "></div>
     </div>
     <div class="visitor-tag">
       <div class="visitor-dot"></div>
@@ -859,7 +875,7 @@ body.alt-theme {
   <div class="stats-row">
     <div class="stat"><div class="stat-n">800+</div><div class="stat-l">games on here</div></div>
     <div class="stat"><div class="stat-n">3</div><div class="stat-l">things to do</div></div>
-    <div class="stat"><div class="stat-n">0</div><div class="stat-l">downloads ever</div></div>
+    <div class="stat"><div class="stat-n" id="onlineCount">--</div><div class="stat-l">playing right now</div></div>
     <div class="stat"><div class="stat-n">24/7</div><div class="stat-l">always up</div></div>
   </div>
 
@@ -1288,6 +1304,46 @@ function triggerEasterEgg() {
     toast.classList.remove('show');
   }, 3500);
 }
+
+// HERO SEARCH
+function heroSearchGames(query) {
+  const results = document.getElementById('heroSearchResults');
+  if (!query.trim()) { results.style.display = 'none'; return; }
+  const matches = GAMES.filter(g => g.title.toLowerCase().includes(query.toLowerCase())).slice(0, 6);
+  if (!matches.length) { results.style.display = 'none'; return; }
+  results.style.display = 'block';
+  results.innerHTML = matches.map(g => `
+    <a href="singlefile.html" onclick="localStorage.setItem('luna_search','${g.title}')" style="
+      display:flex; align-items:center; gap:10px; padding:10px 14px;
+      color:#d0d8f0; font-size:13px; border-bottom:1px solid rgba(255,255,255,0.04);
+      transition:background 0.15s; text-decoration:none;
+    " onmouseover="this.style.background='rgba(112,144,255,0.08)'" onmouseout="this.style.background='none'">
+      <span>${g.emoji}</span><span>${g.title}</span>
+      <span style="margin-left:auto;font-size:10px;color:#606880;font-family:'Space Mono',monospace;">${g.tags ? g.tags[0] : ''}</span>
+    </a>
+  `).join('');
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('#heroSearch') && !e.target.closest('#heroSearchResults')) {
+    const r = document.getElementById('heroSearchResults');
+    if (r) r.style.display = 'none';
+  }
+});
+
+// PEOPLE ONLINE (fake but realistic fluctuating)
+(function() {
+  const base = 23 + Math.floor(Math.random() * 40);
+  let current = base;
+  function update() {
+    current += Math.floor(Math.random() * 7) - 3;
+    current = Math.max(8, Math.min(120, current));
+    const el = document.getElementById('onlineCount');
+    if (el) el.textContent = current;
+    setTimeout(update, 4000 + Math.random() * 4000);
+  }
+  update();
+})();
 
 // PANIC BUTTON
 document.addEventListener('keydown', e => {

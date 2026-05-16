@@ -187,6 +187,7 @@ footer {
     <a href="singlefile.html">games</a>
     <a href="movies.html">movies</a>
     <a href="music.html">music</a>
+    <a href="settings.html">settings</a>
   </div>
 </nav>
 
@@ -349,6 +350,7 @@ footer {
 <footer>// luna settings</footer>
 
 <audio id="lofiAudio" loop style="display:none">
+  <source src="lofi.mp3" type="audio/mpeg">
   <source src="https://cdn.pixabay.com/audio/2024/11/13/audio_a5310c1455.mp3" type="audio/mpeg">
   <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
 </audio>
@@ -451,6 +453,32 @@ function resetAll() {
 
 // Apply cloak on load
 setCloak(savedCloak);
+</script>
+
+<div id="pageTransition" style="position:fixed;inset:0;z-index:999999;background:#04040a;opacity:0;pointer-events:none;transition:opacity 0.25s ease;"></div>
+<script>
+// Page transitions
+document.querySelectorAll('a[href]').forEach(link => {
+  const href = link.getAttribute('href');
+  if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('javascript')) return;
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const o = document.getElementById('pageTransition');
+    o.style.opacity = '1'; o.style.pointerEvents = 'all';
+    setTimeout(() => { window.location.href = href; }, 250);
+  });
+});
+window.addEventListener('load', () => {
+  const o = document.getElementById('pageTransition');
+  if (o) { o.style.opacity = '0'; o.style.pointerEvents = 'none'; }
+});
+// Panic button
+document.addEventListener('keydown', e => {
+  if (e.key === 'F1' && localStorage.getItem('luna_panic') !== 'false') {
+    e.preventDefault();
+    window.location.href = 'https://google.com';
+  }
+});
 </script>
 </body>
 </html>

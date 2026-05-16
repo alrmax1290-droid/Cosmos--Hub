@@ -36,34 +36,12 @@ body {
 
 a { text-decoration: none; color: inherit; }
 
-/* Stars background */
-.stars-bg {
+/* Constellation background */
+#constellationCanvas {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image:
-    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8), transparent),
-    radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,255,0.9), transparent),
-    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1px 1px at 85% 70%, rgba(255,255,255,0.7), transparent),
-    radial-gradient(1.5px 1.5px at 20% 80%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 90% 15%, rgba(255,255,255,0.8), transparent),
-    radial-gradient(1px 1px at 45% 55%, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1.5px 1.5px at 75% 85%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1px 1px at 15% 45%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1px 1px at 35% 25%, rgba(255,255,255,0.7), transparent),
-    radial-gradient(1px 1px at 55% 75%, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1.5px 1.5px at 80% 50%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1px 1px at 25% 95%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1px 1px at 65% 30%, rgba(255,255,255,0.7), transparent),
-    radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 92% 42%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1px 1px at 5% 60%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1.5px 1.5px at 48% 38%, rgba(255,255,255,0.8), transparent);
-  background-size: 100% 100%;
 }
 
 /* Subtle moon glow */
@@ -642,7 +620,7 @@ body.alt-theme {
 <div class="explosion-overlay" id="explosionOverlay"></div>
 <div class="screen-flash" id="screenFlash"></div>
 
-<div class="stars-bg"></div>
+<canvas id="constellationCanvas"></canvas>
 <div class="moon-glow"></div>
 
 <nav>
@@ -1475,7 +1453,225 @@ async function loadCount() {
 loadCount();
 </script>
 
-<!-- PAGE TRANSITION OVERLAY -->
+<!-- LUNA AI CHATBOT -->
+<div id="aiPanel" style="
+  position:fixed; right:-400px; top:0; bottom:0; width:380px;
+  background:#04040a; border-left:1px solid rgba(112,144,255,0.15);
+  z-index:9990; display:flex; flex-direction:column;
+  transition:right 0.3s cubic-bezier(0.4,0,0.2,1);
+  font-family:'Space Grotesk',sans-serif;
+">
+  <div style="padding:16px 20px; border-bottom:1px solid rgba(112,144,255,0.1); display:flex; align-items:center; justify-content:space-between;">
+    <div>
+      <div style="font-family:'Space Mono',monospace; font-size:10px; color:#7090ff; letter-spacing:3px; text-transform:uppercase; margin-bottom:4px;">// luna ai</div>
+      <div style="font-size:16px; font-weight:600; color:#e8eeff;">ask me anything</div>
+    </div>
+    <button onclick="toggleAI()" style="background:none;border:none;color:#606880;cursor:pointer;font-size:20px;line-height:1;">×</button>
+  </div>
+  <div id="aiMessages" style="flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:12px;">
+    <div style="background:rgba(112,144,255,0.08); border:1px solid rgba(112,144,255,0.15); border-radius:12px; border-top-left-radius:4px; padding:12px 14px; font-size:13px; color:#d0d8f0; line-height:1.6; max-width:90%;">
+      hey! i'm luna ai 🌙 ask me anything — game tips, cheats, recommendations, homework help, whatever
+    </div>
+  </div>
+  <div style="padding:12px 16px; border-top:1px solid rgba(112,144,255,0.1); display:flex; gap:8px;">
+    <input id="aiInput" type="text" placeholder="ask something..." style="
+      flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+      border-radius:8px; padding:10px 14px; color:#d0d8f0; font-size:13px;
+      font-family:'Space Grotesk',sans-serif; outline:none;
+    " onkeydown="if(event.key==='Enter') sendAI()">
+    <button onclick="sendAI()" style="
+      padding:10px 16px; border-radius:8px; background:#7090ff;
+      border:none; color:#fff; font-size:13px; font-weight:600;
+      cursor:pointer; font-family:'Space Grotesk',sans-serif;
+      transition:all 0.2s; white-space:nowrap;
+    ">send</button>
+  </div>
+</div>
+
+<!-- AI TOGGLE BUTTON -->
+<button onclick="toggleAI()" id="aiToggleBtn" style="
+  position:fixed; right:20px; top:50%; transform:translateY(-50%);
+  width:44px; height:80px; border-radius:12px;
+  background:#080812; border:1px solid rgba(112,144,255,0.2);
+  color:#7090ff; cursor:pointer; z-index:9989;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:4px; transition:all 0.2s; writing-mode:vertical-rl;
+  font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px;
+" title="Luna AI">🤖</button>
+
+<script>
+// CONSTELLATION BACKGROUND
+(function() {
+  const canvas = document.getElementById('constellationCanvas');
+  const ctx = canvas.getContext('2d');
+  let mouse = { x: -1000, y: -1000 };
+  let nodes = [];
+  let w, h;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', () => { resize(); initNodes(); });
+
+  function initNodes() {
+    const count = Math.floor((w * h) / 14000);
+    nodes = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: 0.8 + Math.random() * 1.8,
+      opacity: 0.3 + Math.random() * 0.7,
+    }));
+  }
+  initNodes();
+
+  document.addEventListener('mousemove', e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+
+    // Update nodes
+    nodes.forEach(n => {
+      const dx = n.x - mouse.x;
+      const dy = n.y - mouse.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 150) {
+        const force = (150 - dist) / 150 * 0.018;
+        n.vx += (dx / dist) * force;
+        n.vy += (dy / dist) * force;
+      }
+      n.vx *= 0.985;
+      n.vy *= 0.985;
+      n.x += n.vx;
+      n.y += n.vy;
+      if (n.x < 0 || n.x > w) n.vx *= -1;
+      if (n.y < 0 || n.y > h) n.vy *= -1;
+      n.x = Math.max(0, Math.min(w, n.x));
+      n.y = Math.max(0, Math.min(h, n.y));
+    });
+
+    // Draw connections
+    const maxDist = 130;
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < maxDist) {
+          const alpha = (1 - dist / maxDist) * 0.25;
+          ctx.strokeStyle = `rgba(112,144,255,${alpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Mouse connections
+    nodes.forEach(n => {
+      const dx = n.x - mouse.x;
+      const dy = n.y - mouse.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 200) {
+        const alpha = (1 - dist / 200) * 0.5;
+        ctx.strokeStyle = `rgba(160,184,255,${alpha})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(mouse.x, mouse.y);
+        ctx.lineTo(n.x, n.y);
+        ctx.stroke();
+      }
+    });
+
+    // Draw nodes
+    nodes.forEach(n => {
+      ctx.fillStyle = `rgba(180,200,255,${n.opacity * 0.8})`;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// LUNA AI CHATBOT
+let aiOpen = false;
+let aiHistory = [];
+
+function toggleAI() {
+  aiOpen = !aiOpen;
+  const panel = document.getElementById('aiPanel');
+  const btn = document.getElementById('aiToggleBtn');
+  panel.style.right = aiOpen ? '0' : '-400px';
+  btn.style.right = aiOpen ? '396px' : '20px';
+  if (aiOpen) document.getElementById('aiInput').focus();
+}
+
+function addMessage(text, isUser) {
+  const messages = document.getElementById('aiMessages');
+  const div = document.createElement('div');
+  div.style.cssText = `
+    background:${isUser ? 'rgba(112,144,255,0.15)' : 'rgba(112,144,255,0.08)'};
+    border:1px solid rgba(112,144,255,${isUser ? '0.3' : '0.15'});
+    border-radius:12px;
+    ${isUser ? 'border-bottom-right-radius:4px; align-self:flex-end;' : 'border-top-left-radius:4px;'}
+    padding:12px 14px; font-size:13px; color:#d0d8f0;
+    line-height:1.6; max-width:90%; white-space:pre-wrap;
+  `;
+  div.textContent = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+  return div;
+}
+
+async function sendAI() {
+  const input = document.getElementById('aiInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  addMessage(text, true);
+  aiHistory.push({ role: 'user', content: text });
+
+  const thinking = addMessage('...', false);
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You are Luna AI, a helpful assistant built into Luna — an unblocked games site for students. You help with:
+- Game tips, cheats, walkthroughs, and recommendations
+- Homework help (math, science, english, history, etc.)
+- General questions and casual chat
+- Recommending games from the Luna library (800+ games including OvO, Retro Bowl, FNAF, Brotato, Geometry Dash, Iron Lung, Cuphead, etc.)
+
+Keep responses concise, friendly, and slightly casual. Use short paragraphs. Never be preachy. You're talking to students who are probably supposed to be doing something else.`,
+        messages: aiHistory,
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || "sorry something went wrong, try again";
+    thinking.textContent = reply;
+    aiHistory.push({ role: 'assistant', content: reply });
+    if (aiHistory.length > 20) aiHistory = aiHistory.slice(-20);
+  } catch(e) {
+    thinking.textContent = "couldn't connect rn, try again in a sec";
+  }
+}
+</script>
 <div id="pageTransition" style="
   position:fixed; inset:0; z-index:999999;
   background:#04040a; opacity:0; pointer-events:none;

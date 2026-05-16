@@ -801,6 +801,10 @@ footer {
       <div style="font-size:12px; color:#7090ff; font-family:'Space Mono',monospace; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px;">// recently played</div>
       <div id="recentChips" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1rem;"></div>
     </div>
+    <div id="favoritesSection" style="display:none; padding: 0 1rem 0; max-width:1200px; margin:0 auto;">
+      <div style="font-size:12px; color:#7090ff; font-family:'Space Mono',monospace; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px;">// favorites ⭐</div>
+      <div id="favoritesChips" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1rem;"></div>
+    </div>
     <br>
         <details id="featuredZonesWrapper" open>
             <summary id="allZonesSummary" style="font-size: 1.2rem; font-weight: bold; cursor: pointer;">Featured Zones</summary>
@@ -828,6 +832,7 @@ footer {
                 <a id="zoneAuthor" href="#" target="_blank">by Author</a>
             </div>
             <div class="zone-controls">
+                <button onclick="toggleFavoriteZone()" id="favBtn">☆ favorite</button>
                 <button onclick="fullscreenZone()">Fullscreen</button>
                 <button onclick="aboutBlank()">Open in New Tab</button>
                 <button onclick="downloadZone()">Download</button>
@@ -1127,6 +1132,8 @@ function openZone(file) {
     if (file.authorLink) {
         document.getElementById('zoneAuthor').href = file.authorLink;
     }
+    const favBtn = document.getElementById('favBtn');
+    if (favBtn) favBtn.textContent = isFavorite(file.id) ? '⭐ favorited' : '☆ favorite';
     zoneViewer.style.cssText = "display:flex !important; flex-direction:column; position:fixed; inset:0; z-index:99999;";
     zoneViewer.hidden = false;
 
@@ -1161,6 +1168,14 @@ function openZone(file) {
         u.searchParams.set('id', file.id);
         history.pushState(null, '', u.toString());
     } catch(error){}
+}
+
+function toggleFavoriteZone() {
+    const id = Number(document.getElementById('zoneId').textContent);
+    const name = document.getElementById('zoneName').textContent;
+    toggleFavorite(id, name);
+    const btn = document.getElementById('favBtn');
+    btn.textContent = isFavorite(id) ? '⭐ favorited' : '☆ favorite';
 }
 
 function aboutBlank() {
@@ -1536,6 +1551,47 @@ function closePopup() {
     document.getElementById('popupOverlay').style.display = "none";
 }
 listZones();
+
+// Favorites
+let favorites = JSON.parse(localStorage.getItem('luna_favorites') || '[]');
+
+function toggleFavorite(id, name) {
+  const idx = favorites.findIndex(f => f.id === id);
+  if (idx === -1) {
+    favorites.push({ id, name });
+  } else {
+    favorites.splice(idx, 1);
+  }
+  localStorage.setItem('luna_favorites', JSON.stringify(favorites));
+  renderFavorites();
+}
+
+function isFavorite(id) {
+  return favorites.some(f => f.id === id);
+}
+
+function renderFavorites() {
+  if (!favorites.length) {
+    document.getElementById('favoritesSection').style.display = 'none';
+    return;
+  }
+  document.getElementById('favoritesSection').style.display = 'block';
+  const chips = document.getElementById('favoritesChips');
+  chips.innerHTML = '';
+  favorites.forEach(fav => {
+    const zone = zones.find(z => z.id === fav.id);
+    if (!zone) return;
+    const chip = document.createElement('button');
+    chip.innerHTML = `⭐ ${fav.name} <span style="opacity:0.5;font-size:11px;margin-left:4px;">×</span>`;
+    chip.style.cssText = 'padding:6px 14px;border-radius:6px;border:1px solid rgba(255,183,0,0.2);background:rgba(255,183,0,0.06);color:#ffd060;font-size:13px;cursor:pointer;transition:all 0.2s;font-family:inherit;display:flex;align-items:center;gap:4px;';
+    chip.onclick = (e) => {
+      if (e.target.tagName === 'SPAN') { toggleFavorite(fav.id, fav.name); return; }
+      openZone(zone);
+    };
+    chips.appendChild(chip);
+  });
+}
+setTimeout(renderFavorites, 1500);
 
 // Recently played
 function renderRecentPlayed() {

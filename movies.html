@@ -52,20 +52,37 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
 <div class="topbar">
   <div class="live-dot"></div>
   <div class="topbar-title">🎬 Movies</div>
-  <div class="topbar-tip">Stream directly in your browser</div>
+  <div class="topbar-tip">opens in a hidden tab</div>
 </div>
-<div class="frame-wrap">
-  <div class="loader" id="loader">
-    <div class="loader-orb"></div>
-    <div class="loader-text">Loading Movies...</div>
+<div class="frame-wrap" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;">
+  <div style="text-align:center;">
+    <div style="font-family:'Space Mono',monospace;font-size:11px;color:#7090ff;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;">// movies & tv</div>
+    <div style="font-size:28px;font-weight:700;color:#e8eeff;margin-bottom:8px;">watch anything</div>
+    <div style="font-size:14px;color:#606880;margin-bottom:28px;">opens in a stealth tab — URL stays hidden</div>
+    <button onclick="openHidden()" style="
+      padding:14px 32px;border-radius:10px;background:#7090ff;
+      border:none;color:#fff;font-size:15px;font-weight:600;
+      cursor:pointer;font-family:'Space Grotesk',sans-serif;
+      transition:all 0.2s;letter-spacing:0.3px;
+    " onmouseover="this.style.background='#5070ee'" onmouseout="this.style.background='#7090ff'">
+      🎬 open movies
+    </button>
+    <div style="font-size:12px;color:#303848;margin-top:12px;font-family:'Space Mono',monospace;">tab will show as about:blank</div>
   </div>
-  <iframe id="frame" src="https://blaysmp.xyz/" allow="autoplay; fullscreen; pointer-lock" allowfullscreen></iframe>
 </div>
 <script>
-const frame = document.getElementById("frame");
-const loader = document.getElementById("loader");
-frame.onload = () => loader.classList.add("hidden");
-setTimeout(() => loader.classList.add("hidden"), 5000);
+function openHidden() {
+  const w = window.open('about:blank', '_blank');
+  if (!w) { alert('allow popups for this site!'); return; }
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>New Tab</title>
+  <style>*{margin:0;padding:0;box-sizing:border-box;}body,html{width:100%;height:100%;overflow:hidden;}iframe{width:100%;height:100%;border:none;display:block;}</style>
+  </head><body>
+  <iframe src="https://blaysmp.xyz/" allow="autoplay; fullscreen; encrypted-media; pointer-lock" allowfullscreen></iframe>
+  </body></html>`;
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+}
 document.addEventListener('keydown', e => { if (e.key === 'F1') { e.preventDefault(); window.location.href = 'https://google.com'; } });
 </script>
 </body>
